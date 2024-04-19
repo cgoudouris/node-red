@@ -1,0 +1,59 @@
+[
+    {
+        "id": "aa1878795e8b0dea",
+        "type": "subflow",
+        "name": "Test",
+        "info": "",
+        "category": "",
+        "in": [],
+        "out": [],
+        "env": [],
+        "meta": {},
+        "color": "#DDAA99"
+    },
+    {
+        "id": "e9c172bc1da61412",
+        "type": "inject",
+        "z": "aa1878795e8b0dea",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 240,
+        "y": 160,
+        "wires": [
+            [
+                "06026a77c767dabd"
+            ]
+        ]
+    },
+    {
+        "id": "06026a77c767dabd",
+        "type": "debug",
+        "z": "aa1878795e8b0dea",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 460,
+        "y": 160,
+        "wires": []
+    }
+]

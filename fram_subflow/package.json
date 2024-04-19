@@ -1,0 +1,19 @@
+{
+  "name": "fram_subflow",
+  "version": "0.0.1",
+  "description": "Node-RED node for fram",
+  "keywords": [
+    "node-red-nodegen", 
+    "node-red-fram"
+  ],
+  "engines": {
+    "node": ">=12.0.0"
+  },
+  "node-red": {
+    "version": ">=1.3.7",
+    "nodes": {
+      "fram": "subflow.js"
+    }
+  },
+  "license": "Apache-2.0"
+}

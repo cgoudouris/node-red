@@ -1,0 +1,182 @@
+[
+    {
+        "id": "cardiac-surgery-flow",
+        "type": "tab",
+        "label": "Cardiac Surgery FRAM Model",
+        "disabled": false,
+        "info": "Sophisticated FRAM model of cardiac surgery system with interconnected foreground functions\\n\\nBased on literature analysis from Formula 1 Pit Stop case study and FRAM methodology.\\n\\nThis model demonstrates:\\n- Multiple interconnected foreground functions\\n- Output-Input dependencies between functions\\n- Functional resonance and variability propagation\\n- Complex sociotechnical system modeling"
+    },
+    {
+        "id": "inject-patient",
+        "type": "inject",
+        "z": "cardiac-surgery-flow",
+        "name": "Patient Arrival",
+        "props": [
+            {
+                "p": "payload.patient",
+                "v": "{\"id\": \"P001\", \"name\": \"João Silva\", \"age\": 65, \"condition\": \"Coronary Artery Disease\", \"urgency\": \"elective\"}",
+                "vt": "json"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "patient-arrival",
+        "x": 130,
+        "y": 100,
+        "wires": [["preop-preparation"]]
+    },
+    {
+        "id": "preop-preparation",
+        "type": "fram",
+        "z": "cardiac-surgery-flow",
+        "name": "Preoperative Preparation (FRAM Function 1)",
+        "functionName": "Preoperative Assessment and Planning",
+        "interpretationProfile": "Human",
+        "hierarchicalGroup": "Primary Care Chain",
+        "framAspects": {
+            "input": "Patient arrival, medical history, diagnostic tests",
+            "output": "Risk assessment, surgical plan, patient ready for surgery",
+            "preconditions": "Patient fasting, consent obtained, team available",
+            "resources": "Medical staff, assessment equipment, patient records",
+            "time": "60-90 minutes depending on complexity",
+            "control": "Preoperative protocols, safety checklists"
+        },
+        "metadata": {
+            "ontology": "Healthcare Preoperative Procedures",
+            "criticality": "High",
+            "dependencies": "None (Initial function)"
+        },
+        "x": 400,
+        "y": 100,
+        "wires": [["anesthesia-management", "blood-bank-ops"]]
+    },
+    {
+        "id": "anesthesia-management",
+        "type": "fram",
+        "z": "cardiac-surgery-flow",
+        "name": "Anesthesia Management (FRAM Function 2)",
+        "functionName": "Patient Anesthesia and Stabilization",
+        "interpretationProfile": "Human",
+        "hierarchicalGroup": "Primary Care Chain",
+        "framAspects": {
+            "input": "Patient risk profile, preoperative assessment, anesthesia plan",
+            "output": "Patient anesthetized, vital signs stable, ready for surgery",
+            "preconditions": "Risk assessment complete, equipment ready, anesthesiologist available",
+            "resources": "Anesthesiologist, anesthesia equipment, monitoring devices",
+            "time": "30-60 minutes for induction and stabilization",
+            "control": "Anesthesia protocols, continuous monitoring, safety procedures"
+        },
+        "metadata": {
+            "ontology": "Anesthesia Management Procedures",
+            "criticality": "Critical",
+            "dependencies": "Preoperative Preparation output"
+        },
+        "x": 700,
+        "y": 200,
+        "wires": [["cardiac-surgery"]]
+    },
+    {
+        "id": "blood-bank-ops",
+        "type": "fram",
+        "z": "cardiac-surgery-flow",
+        "name": "Blood Bank Operations (FRAM Background Function)",
+        "functionName": "Blood Product Preparation and Matching",
+        "interpretationProfile": "Organizational",
+        "hierarchicalGroup": "Support Services",
+        "framAspects": {
+            "input": "Patient blood type, surgical requirements, risk assessment",
+            "output": "Blood products ready, crossmatch complete, emergency backup available",
+            "preconditions": "Blood inventory available, lab ready, qualified technician",
+            "resources": "Blood bank staff, laboratory equipment, blood inventory",
+            "time": "20-45 minutes for crossmatch and preparation",
+            "control": "Blood bank protocols, quality assurance, traceability procedures"
+        },
+        "metadata": {
+            "ontology": "Blood Bank Resource Management",
+            "criticality": "High",
+            "dependencies": "Preoperative Preparation risk assessment"
+        },
+        "x": 700,
+        "y": 100,
+        "wires": [["cardiac-surgery"]]
+    },
+    {
+        "id": "cardiac-surgery",
+        "type": "fram",
+        "z": "cardiac-surgery-flow",
+        "name": "Cardiac Surgery (FRAM Function 3 - Core)",
+        "functionName": "Cardiac Surgical Intervention",
+        "interpretationProfile": "Human",
+        "hierarchicalGroup": "Primary Care Chain",
+        "framAspects": {
+            "input": "Patient anesthetized and stable, blood products ready, surgical team coordinated",
+            "output": "Surgical repair completed, patient stabilized, ready for recovery",
+            "preconditions": "All preparatory functions completed, OR ready, team assembled",
+            "resources": "Surgical team, specialized equipment, blood products, OR environment",
+            "time": "4-8 hours depending on complexity and patient condition",
+            "control": "Surgical protocols, quality standards, safety procedures, team coordination"
+        },
+        "metadata": {
+            "ontology": "Cardiac Surgery Procedures",
+            "criticality": "Critical",
+            "dependencies": "Anesthesia Management + Blood Bank Operations outputs"
+        },
+        "x": 1000,
+        "y": 150,
+        "wires": [["postop-care"]]
+    },
+    {
+        "id": "postop-care",
+        "type": "fram",
+        "z": "cardiac-surgery-flow",
+        "name": "Postoperative Care (FRAM Function 4)",
+        "functionName": "Recovery and Critical Care Monitoring",
+        "interpretationProfile": "Human",
+        "hierarchicalGroup": "Primary Care Chain",
+        "framAspects": {
+            "input": "Post-surgical patient, surgery outcome, anesthesia status",
+            "output": "Patient stabilized, recovery progressing, discharge planning initiated",
+            "preconditions": "ICU bed available, recovery team ready, monitoring equipment functional",
+            "resources": "ICU staff, monitoring equipment, medications, specialized care environment",
+            "time": "24-72 hours in ICU, 5-10 days total recovery",
+            "control": "Post-surgical protocols, continuous monitoring, quality metrics"
+        },
+        "metadata": {
+            "ontology": "Critical Care Recovery Procedures",
+            "criticality": "Critical",
+            "dependencies": "Cardiac Surgery execution results"
+        },
+        "x": 1300,
+        "y": 150,
+        "wires": [["system-outcome"]]
+    },
+    {
+        "id": "system-outcome",
+        "type": "debug",
+        "z": "cardiac-surgery-flow",
+        "name": "FRAM System Analysis",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1600,
+        "y": 150,
+        "wires": []
+    },
+    {
+        "id": "comment-model",
+        "type": "comment",
+        "z": "cardiac-surgery-flow",
+        "name": "Sophisticated FRAM Model: Cardiac Surgery System with Interconnected Functions",
+        "info": "## Advanced FRAM Model Implementation\\n\\n### Based on Literature Research\\n\\nThis model implements insights from:\\n- **Formula 1 Pit Stop Case Study**: Multiple interconnected functions with sequential dependencies\\n- **FRAM Methodology**: Six aspects (Input, Output, Preconditions, Resources, Time, Control)\\n- **Functional Resonance**: Variability propagation between functions\\n\\n### System Architecture\\n\\n**Foreground Functions (Primary Chain):**\\n1. **Preoperative Preparation** ? Risk assessment and surgical planning\\n2. **Anesthesia Management** ? Patient stabilization (depends on Function 1 output)\\n3. **Cardiac Surgery** ? Core intervention (depends on Functions 2 & Background outputs)\\n4. **Postoperative Care** ? Recovery monitoring (depends on Function 3 output)\\n\\n**Background Functions (Supporting):**\\n- **Blood Bank Operations** ? Resource provision (triggered by Function 1, supports Function 3)\\n\\n### Key FRAM Features Demonstrated\\n\\n- **Function Interdependencies**: Each function's outputs become inputs for subsequent functions\\n- **Variability Propagation**: Risk factors and timing variations flow through the system\\n- **Functional Resonance**: How variations in early functions affect later performance\\n- **Multiple Interpretation Profiles**: Human, Organizational aspects\\n- **Realistic Complexity**: Based on real-world healthcare systems\\n\\n### Literature Alignment\\n\\nThis model demonstrates the FRAM principle that functions are interdependent and variability propagates through functional networks, as shown in the F1 Pit Stop case study.",
+        "x": 400,
+        "y": 50,
+        "wires": []
+    }
+]

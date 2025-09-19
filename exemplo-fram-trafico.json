@@ -1,0 +1,222 @@
+[
+    {
+        "id": "exemplo-fram-trafico",
+        "type": "tab",
+        "label": "Exemplo FRAM - Controle de Tráfego",
+        "disabled": false,
+        "info": "Exemplo prático de análise FRAM para sistema de semáforo inteligente"
+    },
+    {
+        "id": "input-sensores",
+        "type": "inject",
+        "z": "exemplo-fram-trafico",
+        "name": "Sensores de Tráfego",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "v": "input_traffic_sensors",
+                "vt": "str"
+            }
+        ],
+        "repeat": "5",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"vehicles\": 12, \"pedestrians\": 3, \"avg_speed\": 45}",
+        "payloadType": "json",
+        "x": 150,
+        "y": 100,
+        "wires": [
+            ["fram-semaforo"]
+        ]
+    },
+    {
+        "id": "input-condicoes",
+        "type": "inject",
+        "z": "exemplo-fram-trafico",
+        "name": "Condições Ambientais",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "v": "precondition_environment",
+                "vt": "str"
+            }
+        ],
+        "repeat": "10",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"rain\": false, \"visibility\": \"good\", \"rush_hour\": true}",
+        "payloadType": "json",
+        "x": 150,
+        "y": 150,
+        "wires": [
+            ["fram-semaforo"]
+        ]
+    },
+    {
+        "id": "input-recursos",
+        "type": "inject",
+        "z": "exemplo-fram-trafico",
+        "name": "Recursos Sistema",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "v": "resource_system_status",
+                "vt": "str"
+            }
+        ],
+        "repeat": "15",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"energy\": 98, \"connectivity\": \"online\", \"maintenance\": \"ok\"}",
+        "payloadType": "json",
+        "x": 150,
+        "y": 200,
+        "wires": [
+            ["fram-semaforo"]
+        ]
+    },
+    {
+        "id": "input-tempo",
+        "type": "inject",
+        "z": "exemplo-fram-trafico",
+        "name": "Controle Temporal",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "v": "timing_control_cycle",
+                "vt": "str"
+            }
+        ],
+        "repeat": "3",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"current_cycle\": 60, \"green_time\": 30, \"yellow_time\": 5}",
+        "payloadType": "json",
+        "x": 150,
+        "y": 250,
+        "wires": [
+            ["fram-semaforo"]
+        ]
+    },
+    {
+        "id": "input-controle",
+        "type": "inject",
+        "z": "exemplo-fram-trafico",
+        "name": "Parâmetros Controle",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "v": "control_parameters",
+                "vt": "str"
+            }
+        ],
+        "repeat": "8",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"algorithm\": \"adaptive\", \"emergency_priority\": false, \"mode\": \"automatic\"}",
+        "payloadType": "json",
+        "x": 150,
+        "y": 300,
+        "wires": [
+            ["fram-semaforo"]
+        ]
+    },
+    {
+        "id": "fram-semaforo",
+        "type": "fram",
+        "z": "exemplo-fram-trafico",
+        "name": "FRAM Semáforo",
+        "inputAspect": "traffic_sensors",
+        "preconditionsAspect": "environment_conditions",
+        "resourcesAspect": "system_resources",
+        "timeAspect": "temporal_control",
+        "controlAspect": "control_parameters",
+        "outputAspect": "traffic_decision",
+        "performanceSettings": {
+            "timingVariability": 0.15,
+            "precisionVariability": 0.1,
+            "efficiencyVariability": 0.2
+        },
+        "x": 400,
+        "y": 200,
+        "wires": [
+            ["debug-output", "acao-semaforo"]
+        ]
+    },
+    {
+        "id": "debug-output",
+        "type": "debug",
+        "z": "exemplo-fram-trafico",
+        "name": "Debug FRAM",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 650,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "acao-semaforo",
+        "type": "function",
+        "z": "exemplo-fram-trafico",
+        "name": "Executar Ação Semáforo",
+        "func": "// Processa a decisão FRAM e executa ação no semáforo\nconst framOutput = msg.payload.framOutput;\nconst performance = msg.payload.performance;\nconst resonance = msg.payload.functionalResonance;\n\n// Determina a ação baseada na análise FRAM\nlet acao = \"manter\";\nlet duracao = 30;\n\nif (framOutput.decisao_semaforo) {\n    const decisao = framOutput.decisao_semaforo;\n    \n    // Analisa variabilidade de performance\n    if (performance.overall < 0.7) {\n        acao = \"modo_seguro\";\n        duracao = 45;\n        node.warn(\"Performance baixa detectada - ativando modo seguro\");\n    }\n    \n    // Verifica ressonância funcional\n    if (resonance.detected) {\n        acao = \"ajuste_adaptativo\";\n        duracao = Math.round(duracao * (1 + resonance.strength));\n        node.log(\"Ressonância funcional detectada - ajustando timing\");\n    }\n    \n    // Lógica específica do semáforo\n    if (decisao.modo === \"automatico\") {\n        if (decisao.vehiculos > 10) {\n            acao = \"estender_verde\";\n            duracao = 45;\n        } else if (decisao.pedestres > 2) {\n            acao = \"priorizar_pedestres\";\n            duracao = 25;\n        }\n    }\n}\n\n// Prepara saída\nmsg.payload = {\n    timestamp: new Date().toISOString(),\n    acao: acao,\n    duracao: duracao,\n    justificativa: `FRAM Analysis - Performance: ${(performance.overall * 100).toFixed(1)}%`,\n    framAnalysis: {\n        variabilidade: performance,\n        ressonancia: resonance,\n        aspectos_ativos: Object.keys(framOutput).length\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 650,
+        "y": 220,
+        "wires": [
+            ["output-final"]
+        ]
+    },
+    {
+        "id": "output-final",
+        "type": "debug",
+        "z": "exemplo-fram-trafico",
+        "name": "Ação Final",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 880,
+        "y": 220,
+        "wires": []
+    }
+]

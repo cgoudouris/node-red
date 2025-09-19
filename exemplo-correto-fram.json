@@ -1,0 +1,359 @@
+[
+    {
+        "id": "exemplo-correto-fram",
+        "type": "tab",
+        "label": "? Exemplo CORRETO - FRAM",
+        "disabled": false,
+        "info": "Exemplo com identificação de aspectos funcionando corretamente"
+    },
+    {
+        "id": "metodo1-explicito",
+        "type": "comment",
+        "z": "exemplo-correto-fram",
+        "name": "MÉTODO 1: framAspect Explícito (Recomendado)",
+        "info": "Usa msg.framAspect para definir o aspecto diretamente",
+        "x": 290,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "inject-explicito-input",
+        "type": "inject",
+        "z": "exemplo-correto-fram",
+        "name": "Input (Explícito)",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "framAspect",
+                "v": "input",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"sensors\": [\"temp\", \"pressure\"], \"status\": \"active\"}",
+        "payloadType": "json",
+        "x": 140,
+        "y": 100,
+        "wires": [
+            ["fram-correto"]
+        ]
+    },
+    {
+        "id": "inject-explicito-resources",
+        "type": "inject",
+        "z": "exemplo-correto-fram",
+        "name": "Resources (Explícito)",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "framAspect",
+                "v": "resources",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"energy\": 85, \"memory\": 75, \"cpu\": 60}",
+        "payloadType": "json",
+        "x": 140,
+        "y": 140,
+        "wires": [
+            ["fram-correto"]
+        ]
+    },
+    {
+        "id": "inject-explicito-time",
+        "type": "inject",
+        "z": "exemplo-correto-fram",
+        "name": "Time (Explícito)",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "framAspect",
+                "v": "time",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"cycle_time\": 30, \"deadline\": \"2025-09-19T16:00:00Z\"}",
+        "payloadType": "json",
+        "x": 140,
+        "y": 180,
+        "wires": [
+            ["fram-correto"]
+        ]
+    },
+    {
+        "id": "metodo2-topic",
+        "type": "comment",
+        "z": "exemplo-correto-fram",
+        "name": "MÉTODO 2: Topic com Palavras-Chave em INGLÊS",
+        "info": "Usa palavras-chave em inglês no msg.topic",
+        "x": 290,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "inject-topic-input",
+        "type": "inject",
+        "z": "exemplo-correto-fram",
+        "name": "Input via Topic",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "v": "input_sensor_data",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"temperature\": 25, \"humidity\": 60}",
+        "payloadType": "json",
+        "x": 140,
+        "y": 280,
+        "wires": [
+            ["fram-correto"]
+        ]
+    },
+    {
+        "id": "inject-topic-resource",
+        "type": "inject",
+        "z": "exemplo-correto-fram",
+        "name": "Resource via Topic",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "v": "resource_system_status",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"power\": 90, \"network\": \"connected\"}",
+        "payloadType": "json",
+        "x": 140,
+        "y": 320,
+        "wires": [
+            ["fram-correto"]
+        ]
+    },
+    {
+        "id": "inject-topic-time",
+        "type": "inject",
+        "z": "exemplo-correto-fram",
+        "name": "Time via Topic",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "v": "timing_control_schedule",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"interval\": 60, \"next_execution\": \"15:30:00\"}",
+        "payloadType": "json",
+        "x": 140,
+        "y": 360,
+        "wires": [
+            ["fram-correto"]
+        ]
+    },
+    {
+        "id": "inject-topic-control",
+        "type": "inject",
+        "z": "exemplo-correto-fram",
+        "name": "Control via Topic",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "v": "control_parameters_config",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"mode\": \"automatic\", \"sensitivity\": 0.8}",
+        "payloadType": "json",
+        "x": 140,
+        "y": 400,
+        "wires": [
+            ["fram-correto"]
+        ]
+    },
+    {
+        "id": "inject-topic-precondition",
+        "type": "inject",
+        "z": "exemplo-correto-fram",
+        "name": "Precondition via Topic",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "v": "precondition_environment",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"weather\": \"clear\", \"maintenance\": \"completed\"}",
+        "payloadType": "json",
+        "x": 140,
+        "y": 440,
+        "wires": [
+            ["fram-correto"]
+        ]
+    },
+    {
+        "id": "fram-correto",
+        "type": "fram",
+        "z": "exemplo-correto-fram",
+        "name": "FRAM ? Funcionando",
+        "inputAspect": "sensor_data",
+        "preconditionsAspect": "environmental_conditions",
+        "resourcesAspect": "system_resources",
+        "timeAspect": "timing_control",
+        "controlAspect": "parameters",
+        "outputAspect": "analysis_result",
+        "x": 400,
+        "y": 280,
+        "wires": [
+            ["debug-resultado", "verificar-aspectos"]
+        ]
+    },
+    {
+        "id": "debug-resultado",
+        "type": "debug",
+        "z": "exemplo-correto-fram",
+        "name": "? Resultado FRAM",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 640,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "verificar-aspectos",
+        "type": "function",
+        "z": "exemplo-correto-fram",
+        "name": "?? Verificar Aspectos",
+        "func": "// Simula verificação de como aspectos foram identificados\nconst originalTopic = msg.topic;\nconst framAspect = msg.framAspect;\n\n// Replica a lógica de detecção do node FRAM\nfunction detectAspect(topic, explicitAspect) {\n    if (explicitAspect) {\n        return explicitAspect;\n    }\n    \n    if (topic) {\n        const t = topic.toLowerCase();\n        if (t.includes(\"input\") || t.includes(\"trigger\")) return \"input\";\n        if (t.includes(\"precondition\") || t.includes(\"condition\")) return \"preconditions\";\n        if (t.includes(\"resource\") || t.includes(\"material\")) return \"resources\";\n        if (t.includes(\"time\") || t.includes(\"timing\")) return \"time\";\n        if (t.includes(\"control\") || t.includes(\"supervision\")) return \"control\";\n    }\n    \n    return \"input\"; // default\n}\n\nconst aspectoDetectado = detectAspect(originalTopic, framAspect);\n\n// Prepara saída explicativa\nmsg.payload = {\n    ?: \"EXEMPLO CORRETO\",\n    identificacao: {\n        topic_usado: originalTopic || \"(nenhum)\",\n        framAspect_usado: framAspect || \"(nenhum)\",\n        aspecto_detectado: aspectoDetectado,\n        metodo: framAspect ? \"?? Explícito (framAspect)\" : \"?? Automático (topic)\",\n        funciona: true\n    },\n    dados_originais: msg.payload,\n    timestamp: new Date().toISOString(),\n    palavras_chave_detectadas: {\n        input: [\"input\", \"trigger\"],\n        resources: [\"resource\", \"material\"], \n        time: [\"time\", \"timing\"],\n        control: [\"control\", \"supervision\"],\n        preconditions: [\"precondition\", \"condition\"]\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 640,
+        "y": 300,
+        "wires": [
+            ["debug-verificacao"]
+        ]
+    },
+    {
+        "id": "debug-verificacao",
+        "type": "debug",
+        "z": "exemplo-correto-fram",
+        "name": "?? Como foi detectado",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 860,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "exemplo-errado",
+        "type": "comment",
+        "z": "exemplo-correto-fram",
+        "name": "? ERRO COMUM: Palavras em português não funcionam!",
+        "info": "Topics como 'sensores_trafico' ou 'recursos_sistema' NÃO são detectados",
+        "x": 340,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "inject-errado",
+        "type": "inject",
+        "z": "exemplo-correto-fram",
+        "name": "? Exemplo Errado",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "v": "sensores_trafico_dados",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"veiculos\": 10}",
+        "payloadType": "json",
+        "x": 140,
+        "y": 540,
+        "wires": [
+            ["fram-correto"]
+        ]
+    }
+]

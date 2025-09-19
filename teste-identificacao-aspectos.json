@@ -1,0 +1,250 @@
+[
+    {
+        "id": "teste-identificacao-fram",
+        "type": "tab",
+        "label": "Teste: Identificação Aspectos FRAM",
+        "disabled": false,
+        "info": "Teste como o node FRAM identifica diferentes aspectos"
+    },
+    {
+        "id": "input-sensor",
+        "type": "inject",
+        "z": "teste-identificacao-fram",
+        "name": "Sensor (Input)",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "v": "sensor_input_data",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"temperatura\": 25, \"umidade\": 60}",
+        "payloadType": "json",
+        "x": 140,
+        "y": 80,
+        "wires": [
+            ["fram-identificacao"]
+        ]
+    },
+    {
+        "id": "recursos-energia",
+        "type": "inject",
+        "z": "teste-identificacao-fram",
+        "name": "Energia (Resources)",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "v": "resources_energy_system",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"bateria\": 85, \"consumo\": \"normal\"}",
+        "payloadType": "json",
+        "x": 140,
+        "y": 120,
+        "wires": [
+            ["fram-identificacao"]
+        ]
+    },
+    {
+        "id": "timing-controle",
+        "type": "inject",
+        "z": "teste-identificacao-fram",
+        "name": "Timing (Time)",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "v": "timing_schedule_control",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"intervalo\": 30, \"proximo\": \"2025-09-19T15:00:00Z\"}",
+        "payloadType": "json",
+        "x": 140,
+        "y": 160,
+        "wires": [
+            ["fram-identificacao"]
+        ]
+    },
+    {
+        "id": "parametros-control",
+        "type": "inject",
+        "z": "teste-identificacao-fram",
+        "name": "Parâmetros (Control)",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "v": "control_parameters_config",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"modo\": \"automatico\", \"sensibilidade\": 0.8}",
+        "payloadType": "json",
+        "x": 140,
+        "y": 200,
+        "wires": [
+            ["fram-identificacao"]
+        ]
+    },
+    {
+        "id": "condicoes-ambiente",
+        "type": "inject",
+        "z": "teste-identificacao-fram",
+        "name": "Condições (Preconditions)",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "v": "preconditions_environment",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"clima\": \"bom\", \"manutencao\": \"ok\"}",
+        "payloadType": "json",
+        "x": 140,
+        "y": 240,
+        "wires": [
+            ["fram-identificacao"]
+        ]
+    },
+    {
+        "id": "explicito-aspect",
+        "type": "inject",
+        "z": "teste-identificacao-fram",
+        "name": "Explícito (framAspect)",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "v": "qualquer_topic",
+                "vt": "str"
+            },
+            {
+                "p": "framAspect",
+                "v": "resources",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"memoria\": 75, \"cpu\": 45}",
+        "payloadType": "json",
+        "x": 140,
+        "y": 280,
+        "wires": [
+            ["fram-identificacao"]
+        ]
+    },
+    {
+        "id": "fram-identificacao",
+        "type": "fram",
+        "z": "teste-identificacao-fram",
+        "name": "FRAM Identificação",
+        "inputAspect": "dados_entrada",
+        "preconditionsAspect": "condicoes_necessarias",
+        "resourcesAspect": "recursos_disponiveis",
+        "timeAspect": "aspectos_temporais",
+        "controlAspect": "parametros_controle",
+        "outputAspect": "resultado_analise",
+        "x": 400,
+        "y": 180,
+        "wires": [
+            ["debug-aspectos", "mostrar-estado"]
+        ]
+    },
+    {
+        "id": "debug-aspectos",
+        "type": "debug",
+        "z": "teste-identificacao-fram",
+        "name": "Resultado FRAM",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 640,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "mostrar-estado",
+        "type": "function",
+        "z": "teste-identificacao-fram",
+        "name": "Mostrar Estado Interno",
+        "func": "// Simula como o node FRAM identifica aspectos\nconst originalTopic = msg.topic;\nconst framAspect = msg.framAspect;\n\n// Função de detecção (replica a lógica do node FRAM)\nfunction detectAspect(topic, explicitAspect) {\n    if (explicitAspect) {\n        return explicitAspect;\n    }\n    \n    if (topic) {\n        const t = topic.toLowerCase();\n        if (t.includes(\"input\") || t.includes(\"sensor\") || t.includes(\"data\")) return \"input\";\n        if (t.includes(\"resource\") || t.includes(\"energy\") || t.includes(\"material\")) return \"resources\";\n        if (t.includes(\"time\") || t.includes(\"timing\") || t.includes(\"schedule\")) return \"time\";\n        if (t.includes(\"control\") || t.includes(\"parameter\") || t.includes(\"config\")) return \"control\";\n        if (t.includes(\"precondition\") || t.includes(\"condition\") || t.includes(\"environment\")) return \"preconditions\";\n    }\n    \n    return \"input\"; // default\n}\n\nconst aspectoDetectado = detectAspect(originalTopic, framAspect);\n\n// Prepara saída explicativa\nmsg.payload = {\n    identificacao: {\n        topic_original: originalTopic,\n        framAspect_explicito: framAspect || \"não especificado\",\n        aspecto_detectado: aspectoDetectado,\n        metodo_identificacao: framAspect ? \"Explícito (framAspect)\" : \"Automático (topic)\"\n    },\n    dados_originais: msg.payload,\n    timestamp: new Date().toISOString(),\n    explicacao: {\n        como_detectou: framAspect ? \n            `Usou msg.framAspect='${framAspect}' (mais preciso)` :\n            `Analisou palavras-chave no topic '${originalTopic}'`,\n        aspecto_fram: aspectoDetectado,\n        proximos_passos: \"Node armazena dados e aguarda outros aspectos para executar análise\"\n    }\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 640,
+        "y": 200,
+        "wires": [
+            ["debug-explicacao"]
+        ]
+    },
+    {
+        "id": "debug-explicacao",
+        "type": "debug",
+        "z": "teste-identificacao-fram",
+        "name": "Como Foi Identificado",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 880,
+        "y": 200,
+        "wires": []
+    }
+]

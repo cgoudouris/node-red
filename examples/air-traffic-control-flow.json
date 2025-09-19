@@ -1,0 +1,361 @@
+[
+    {
+        "id": "atc-human-flow",
+        "type": "tab",
+        "label": "Air Traffic Control - Human Factors",
+        "disabled": false,
+        "info": "ATC system example using FRAM human profile for cognitive factors analysis. Demonstrates mental workload, fatigue and decision-making analysis in critical environment."
+    },
+    {
+        "id": "fram-atc",
+        "type": "fram",
+        "z": "atc-human-flow",
+        "name": "ATC System - Human Factors",
+        "functionName": "Air_Traffic_Control",
+        "interpretationProfile": "human",
+        "variabilityMode": "medium",
+        "timeConstraint": "30s",
+        "resourceThreshold": 75,
+        "enableResonance": true,
+        "enableMetadata": true,
+        "advancedAnalysis": true,
+        "standardizedReporting": true,
+        "hierarchicalGroup": "ATC_Operations",
+        "ontologyMapping": {
+            "input": "radar_aircraft_data",
+            "resources": "cognitive_workload_capacity",
+            "control": "human_decision_making"
+        },
+        "x": 500,
+        "y": 280,
+        "wires": [["atc-analysis", "fatigue-monitor"]]
+    },
+    {
+        "id": "radar-data",
+        "type": "inject",
+        "z": "atc-human-flow",
+        "name": "Radar Data",
+        "props": [
+            {
+                "p": "payload",
+                "v": "{\"aircraft_count\":12,\"complexity_score\":7.5,\"weather_impact\":\"moderate\",\"emergency_situations\":0,\"runway_usage\":\"heavy\",\"coordination_required\":3}",
+                "vt": "json"
+            },
+            {
+                "p": "topic",
+                "v": "input_radar_situation",
+                "vt": "str"
+            },
+            {
+                "p": "framAspect",
+                "v": "input",
+                "vt": "str"
+            },
+            {
+                "p": "metadata",
+                "v": "{\"dataSource\":\"primary_radar\",\"updateRate\":\"4s\",\"accuracy\":\"±50m\",\"weather_radar_integrated\":true,\"complexity_factors\":[\"multiple_approaches\",\"crossing_traffic\",\"weather_deviation\"],\"hierarchicalGroup\":\"ATC_Operations\"}",
+                "vt": "json"
+            }
+        ],
+        "repeat": "5",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 170,
+        "y": 180,
+        "wires": [["fram-atc"]]
+    },
+    {
+        "id": "controller-status",
+        "type": "inject",
+        "z": "atc-human-flow",
+        "name": "Controller Status",
+        "props": [
+            {
+                "p": "payload",
+                "v": "{\"certified\":true,\"experience_level\":\"senior\",\"shift_hours\":3.5,\"fatigue_level\":\"low\",\"stress_indicators\":\"normal\",\"last_break\":\"45min_ago\"}",
+                "vt": "json"
+            },
+            {
+                "p": "topic",
+                "v": "precondition_controller_ready",
+                "vt": "str"
+            },
+            {
+                "p": "framAspect",
+                "v": "preconditions",
+                "vt": "str"
+            },
+            {
+                "p": "metadata",
+                "v": "{\"certification\":\"ICAO_Level_5\",\"medical_clearance\":\"valid\",\"training_currency\":\"current\",\"performance_rating\":\"excellent\",\"psychological_assessment\":\"fit_for_duty\",\"sleep_quality\":\"good\"}",
+                "vt": "json"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.5,
+        "topic": "",
+        "x": 170,
+        "y": 220,
+        "wires": [["fram-atc"]]
+    },
+    {
+        "id": "cognitive-resources",
+        "type": "inject",
+        "z": "atc-human-flow",
+        "name": "Cognitive Resources",
+        "props": [
+            {
+                "p": "payload",
+                "v": "{\"mental_workload\":65,\"attention_capacity\":85,\"memory_load\":45,\"decision_speed\":\"optimal\",\"situation_awareness\":90,\"communication_clarity\":95}",
+                "vt": "json"
+            },
+            {
+                "p": "topic",
+                "v": "resource_cognitive_capacity",
+                "vt": "str"
+            },
+            {
+                "p": "framAspect",
+                "v": "resources",
+                "vt": "str"
+            },
+            {
+                "p": "metadata",
+                "v": "{\"workload_measurement\":\"NASA_TLX\",\"attention_tracking\":\"eye_movement\",\"stress_biomarkers\":\"heart_rate_variability\",\"cognitive_reserve\":\"high\",\"multitasking_ability\":\"excellent\"}",
+                "vt": "json"
+            }
+        ],
+        "repeat": "4",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 1,
+        "topic": "",
+        "x": 170,
+        "y": 260,
+        "wires": [["fram-atc"]]
+    },
+    {
+        "id": "time-pressure",
+        "type": "inject",
+        "z": "atc-human-flow",
+        "name": "Time Pressure",
+        "props": [
+            {
+                "p": "payload",
+                "v": "{\"decision_window\":\"30s\",\"urgency_level\":\"moderate\",\"time_available\":\"adequate\",\"concurrent_tasks\":4,\"interruption_frequency\":\"low\"}",
+                "vt": "json"
+            },
+            {
+                "p": "topic",
+                "v": "timing_decision_window",
+                "vt": "str"
+            },
+            {
+                "p": "framAspect",
+                "v": "time",
+                "vt": "str"
+            },
+            {
+                "p": "metadata",
+                "v": "{\"time_criticality\":\"high\",\"decision_urgency\":\"moderate\",\"temporal_coordination\":\"required\",\"scheduling_complexity\":\"medium\",\"time_management_skill\":\"expert\"}",
+                "vt": "json"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 1.5,
+        "topic": "",
+        "x": 170,
+        "y": 300,
+        "wires": [["fram-atc"]]
+    },
+    {
+        "id": "human-control",
+        "type": "inject",
+        "z": "atc-human-flow",
+        "name": "Human Control",
+        "props": [
+            {
+                "p": "payload",
+                "v": "{\"decision_confidence\":85,\"automation_trust\":\"appropriate\",\"manual_override\":\"available\",\"expertise_level\":\"expert\",\"team_coordination\":\"effective\",\"risk_tolerance\":\"conservative\"}",
+                "vt": "json"
+            },
+            {
+                "p": "topic",
+                "v": "control_human_decision",
+                "vt": "str"
+            },
+            {
+                "p": "framAspect",
+                "v": "control",
+                "vt": "str"
+            },
+            {
+                "p": "metadata",
+                "v": "{\"decision_authority\":\"primary_controller\",\"cognitive_bias_awareness\":\"high\",\"error_recovery_ability\":\"excellent\",\"adaptability\":\"high\",\"communication_effectiveness\":\"very_good\"}",
+                "vt": "json"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 2,
+        "topic": "",
+        "x": 170,
+        "y": 340,
+        "wires": [["fram-atc"]]
+    },
+    {
+        "id": "atc-analysis",
+        "type": "debug",
+        "z": "atc-human-flow",
+        "name": "FRAM Analysis - ATC",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 770,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "fatigue-monitor",
+        "type": "function",
+        "z": "atc-human-flow",
+        "name": "Fatigue Monitor",
+        "func": "// Specialized monitor for human factors in ATC\nvar payload = msg.payload;\n\n// Fatigue and mental workload analysis\nif (payload && payload.performance) {\n    var workloadWarning = false;\n    var fatigueWarning = false;\n    \n    // Check overload indicators\n    if (payload.aspects && payload.aspects.resources) {\n        var cognitive = payload.aspects.resources;\n        if (cognitive.mental_workload > 80) {\n            workloadWarning = true;\n            node.warn(\"High mental workload detected: \" + cognitive.mental_workload + \"%\");\n        }\n        if (cognitive.attention_capacity < 70) {\n            workloadWarning = true;\n            node.warn(\"Reduced attention capacity: \" + cognitive.attention_capacity + \"%\");\n        }\n    }\n    \n    // Check fatigue based on shift time\n    if (payload.aspects && payload.aspects.preconditions) {\n        var controller = payload.aspects.preconditions;\n        if (controller.shift_hours > 6 || controller.fatigue_level === \"high\") {\n            fatigueWarning = true;\n            node.warn(\"High fatigue indicators detected\");\n        }\n    }\n    \n    // Cognitive resonance analysis\n    if (payload.resonance && payload.resonance.detected) {\n        var resonanceAlert = {\n            payload: {\n                alert_type: \"cognitive_resonance\",\n                severity: payload.resonance.intensity > 0.7 ? \"critical\" : \"warning\",\n                factors: {\n                    workload_warning: workloadWarning,\n                    fatigue_warning: fatigueWarning,\n                    resonance_intensity: payload.resonance.intensity\n                },\n                recommendations: [\n                    \"Consider workload redistribution\",\n                    \"Monitor controller fatigue closely\",\n                    \"Prepare backup controller if needed\",\n                    \"Review situational complexity\"\n                ],\n                timestamp: new Date().toISOString()\n            },\n            topic: \"human_factors_alert\"\n        };\n        \n        node.send([null, resonanceAlert]);\n    }\n    \n    // Human factors report\n    var humanFactorsReport = {\n        payload: {\n            controller_performance: {\n                workload_level: payload.aspects?.resources?.mental_workload || \"unknown\",\n                attention_status: payload.aspects?.resources?.attention_capacity || \"unknown\",\n                decision_confidence: payload.aspects?.control?.decision_confidence || \"unknown\",\n                fatigue_indicators: payload.aspects?.preconditions?.fatigue_level || \"unknown\"\n            },\n            situation_complexity: {\n                aircraft_count: payload.aspects?.input?.aircraft_count || 0,\n                complexity_score: payload.aspects?.input?.complexity_score || 0,\n                emergency_situations: payload.aspects?.input?.emergency_situations || 0\n            },\n            risk_assessment: payload.advancedAnalysis?.riskAssessment || {},\n            timestamp: new Date().toISOString()\n        },\n        topic: \"human_factors_report\"\n    };\n    \n    node.send([humanFactorsReport, null]);\n}\n\nreturn msg;",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 770,
+        "y": 300,
+        "wires": [["human-factors-log"], ["cognitive-alerts"]]
+    },
+    {
+        "id": "human-factors-log",
+        "type": "debug",
+        "z": "atc-human-flow",
+        "name": "Human Factors Log",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1010,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "cognitive-alerts",
+        "type": "debug",
+        "z": "atc-human-flow",
+        "name": "Cognitive Alerts",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1000,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "scenario-generator",
+        "type": "inject",
+        "z": "atc-human-flow",
+        "name": "Generate Critical Scenario",
+        "props": [
+            {
+                "p": "payload",
+                "v": "emergency_scenario",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 170,
+        "y": 400,
+        "wires": [["emergency-scenario"]]
+    },
+    {
+        "id": "emergency-scenario",
+        "type": "function",
+        "z": "atc-human-flow",
+        "name": "Emergency Scenario",
+        "func": "// Simulates emergency scenario to test human factors\nvar delay = 2000; // 2 seconds between messages\n\n// Emergency situation\nsetTimeout(() => {\n    node.send({\n        payload: {\n            aircraft_count: 18, // Sudden increase\n            complexity_score: 9.5, // Very high\n            weather_impact: \"severe\",\n            emergency_situations: 2, // Two emergencies\n            runway_usage: \"critical\",\n            coordination_required: 8\n        },\n        topic: \"input_emergency_situation\",\n        framAspect: \"input\",\n        metadata: {\n            scenario_type: \"multiple_emergency\",\n            weather_conditions: \"storm_approaching\",\n            visibility: \"reduced\",\n            wind_conditions: \"gusty\",\n            hierarchicalGroup: \"ATC_Operations\"\n        }\n    });\n}, delay);\n\n// Increased mental workload\nsetTimeout(() => {\n    node.send({\n        payload: {\n            mental_workload: 95, // Overload\n            attention_capacity: 60, // Reduced\n            memory_load: 85, // High\n            decision_speed: \"rushed\",\n            situation_awareness: 70, // Compromised\n            communication_clarity: 75 // Affected\n        },\n        topic: \"resource_cognitive_overload\",\n        framAspect: \"resources\",\n        metadata: {\n            stress_level: \"high\",\n            cognitive_tunneling: \"possible\",\n            information_overload: \"detected\",\n            workload_measurement: \"NASA_TLX\"\n        }\n    });\n}, delay * 1.5);\n\n// Extreme time pressure\nsetTimeout(() => {\n    node.send({\n        payload: {\n            decision_window: \"10s\", // Very reduced\n            urgency_level: \"critical\",\n            time_available: \"insufficient\",\n            concurrent_tasks: 12, // Overload\n            interruption_frequency: \"very_high\"\n        },\n        topic: \"timing_critical_decision\",\n        framAspect: \"time\",\n        metadata: {\n            time_criticality: \"extreme\",\n            decision_urgency: \"immediate\",\n            temporal_coordination: \"complex\",\n            scheduling_complexity: \"very_high\"\n        }\n    });\n}, delay * 2);\n\n// Control under stress\nsetTimeout(() => {\n    node.send({\n        payload: {\n            decision_confidence: 65, // Reduced\n            automation_trust: \"questioning\",\n            manual_override: \"frequent\",\n            expertise_level: \"expert\",\n            team_coordination: \"strained\",\n            risk_tolerance: \"very_conservative\"\n        },\n        topic: \"control_stress_response\",\n        framAspect: \"control\",\n        metadata: {\n            stress_response: \"heightened\",\n            decision_strategy: \"risk_averse\",\n            cognitive_bias_risk: \"tunnel_vision\",\n            error_probability: \"increased\"\n        }\n    });\n}, delay * 2.5);\n\nnode.log(\"Emergency scenario initiated - testing human factors limits\");\n\nreturn null;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 400,
+        "wires": [["fram-atc"]]
+    },
+    {
+        "id": "workload-simulator",
+        "type": "inject",
+        "z": "atc-human-flow",
+        "name": "Simulate Workload Variation",
+        "props": [
+            {
+                "p": "payload",
+                "v": "workload_variation",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 170,
+        "y": 440,
+        "wires": [["workload-variation"]]
+    },
+    {
+        "id": "workload-variation",
+        "type": "function",
+        "z": "atc-human-flow",
+        "name": "Mental Workload Variation",
+        "func": "// Simula variação natural da carga mental durante turno\nvar timeOfShift = context.get('shiftTime') || 0;\ntimeOfShift += 0.5; // Incrementa 30 minutos\ncontext.set('shiftTime', timeOfShift);\n\n// Calcular fadiga baseada no tempo de turno\nvar fatigueLevel = \"low\";\nvar fatigueScore = 10;\nif (timeOfShift > 4) {\n    fatigueLevel = \"moderate\";\n    fatigueScore = 40;\n}\nif (timeOfShift > 6) {\n    fatigueLevel = \"high\";\n    fatigueScore = 70;\n}\nif (timeOfShift > 8) {\n    fatigueLevel = \"critical\";\n    fatigueScore = 90;\n}\n\n// Variação natural da carga mental\nvar baseMentalLoad = 50 + (timeOfShift * 3); // Aumenta gradualmente\nvar randomVariation = (Math.random() - 0.5) * 20; // ±10\nvar mentalWorkload = Math.max(20, Math.min(100, baseMentalLoad + randomVariation));\n\n// Capacidade de atenção diminui com fadiga\nvar attentionCapacity = Math.max(30, 100 - fatigueScore - (Math.random() * 10));\n\n// Enviar atualização de recursos cognitivos\nvar cognitiveUpdate = {\n    payload: {\n        mental_workload: Math.round(mentalWorkload),\n        attention_capacity: Math.round(attentionCapacity),\n        memory_load: Math.round(30 + (timeOfShift * 2) + (Math.random() * 15)),\n        decision_speed: mentalWorkload > 80 ? \"delayed\" : \"optimal\",\n        situation_awareness: Math.round(Math.max(50, 95 - fatigueScore)),\n        communication_clarity: Math.round(Math.max(60, 100 - (fatigueScore * 0.5)))\n    },\n    topic: \"resource_cognitive_update\",\n    framAspect: \"resources\",\n    metadata: {\n        shift_time: timeOfShift + \"h\",\n        fatigue_level: fatigueLevel,\n        fatigue_score: fatigueScore,\n        workload_trend: mentalWorkload > 75 ? \"increasing\" : \"stable\",\n        timestamp: new Date().toISOString()\n    }\n};\n\n// Atualizar status do controlador\nvar controllerUpdate = {\n    payload: {\n        certified: true,\n        experience_level: \"senior\",\n        shift_hours: timeOfShift,\n        fatigue_level: fatigueLevel,\n        stress_indicators: fatigueScore > 60 ? \"elevated\" : \"normal\",\n        last_break: Math.random() > 0.7 ? \"recent\" : \"overdue\"\n    },\n    topic: \"precondition_controller_update\",\n    framAspect: \"preconditions\",\n    metadata: {\n        fatigue_assessment: \"automated\",\n        break_compliance: timeOfShift > 4 && Math.random() > 0.3 ? \"compliant\" : \"needs_break\",\n        performance_degradation: fatigueScore > 70 ? \"detected\" : \"none\"\n    }\n};\n\nnode.send([cognitiveUpdate, controllerUpdate]);\n\nnode.log(`Turno: ${timeOfShift}h, Fadiga: ${fatigueLevel}, Carga Mental: ${Math.round(mentalWorkload)}%`);\n\nreturn null;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 410,
+        "y": 440,
+        "wires": [["fram-atc"]]
+    },
+    {
+        "id": "comment-atc",
+        "type": "comment",
+        "z": "atc-human-flow",
+        "name": "Air Traffic Control - Human Profile",
+        "info": "This flow demonstrates the use of the advanced FRAM node for human factors analysis in ATC:\n\n**Human Profile Characteristics:**\n- Emphasis on cognition and decision-making\n- Fatigue and mental workload analysis\n- Monitoring of human capabilities\n- Cognitive resonance detection\n\n**FRAM Aspects Implemented:**\n- Input: Traffic situation and complexity\n- Preconditions: Controller status and qualification\n- Resources: Cognitive resources and attention\n- Time: Time pressure and decision windows\n- Control: Human decision-making\n\n**Demonstrated Features:**\n- Human factors metadata (certifications, assessments)\n- Specialized fatigue monitor\n- Critical scenario simulation\n- Mental workload variation analysis\n- Cognitive and overload alerts\n- Resonance analysis in human systems",
+        "x": 220,
+        "y": 80,
+        "wires": []
+    }
+]

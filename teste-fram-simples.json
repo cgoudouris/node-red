@@ -1,0 +1,99 @@
+[
+    {
+        "id": "teste-fram-simples",
+        "type": "tab",
+        "label": "Teste FRAM Simples",
+        "disabled": false,
+        "info": "Teste básico do node FRAM"
+    },
+    {
+        "id": "inject-teste",
+        "type": "inject",
+        "z": "teste-fram-simples",
+        "name": "Testar FRAM",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "framAspect",
+                "v": "input",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"vehicles\": 15, \"status\": \"normal\"}",
+        "payloadType": "json",
+        "x": 120,
+        "y": 100,
+        "wires": [
+            ["fram-teste"]
+        ]
+    },
+    {
+        "id": "inject-recursos",
+        "type": "inject",
+        "z": "teste-fram-simples",
+        "name": "Recursos",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "framAspect",
+                "v": "resources",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"energy\": 95, \"status\": \"ok\"}",
+        "payloadType": "json",
+        "x": 120,
+        "y": 140,
+        "wires": [
+            ["fram-teste"]
+        ]
+    },
+    {
+        "id": "fram-teste",
+        "type": "fram",
+        "z": "teste-fram-simples",
+        "name": "FRAM Teste",
+        "inputAspect": "traffic_sensors",
+        "preconditionsAspect": "conditions",
+        "resourcesAspect": "system_resources",
+        "timeAspect": "timing",
+        "controlAspect": "control",
+        "outputAspect": "result",
+        "x": 300,
+        "y": 120,
+        "wires": [
+            ["debug-teste"]
+        ]
+    },
+    {
+        "id": "debug-teste",
+        "type": "debug",
+        "z": "teste-fram-simples",
+        "name": "Resultado",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 480,
+        "y": 120,
+        "wires": []
+    }
+]

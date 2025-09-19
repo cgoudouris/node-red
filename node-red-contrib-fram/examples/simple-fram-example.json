@@ -1,0 +1,211 @@
+[
+    {
+        "id": "simple-fram-example",
+        "type": "tab",
+        "label": "Simple FRAM Example",
+        "disabled": false,
+        "info": "Basic example demonstrating FRAM node usage with inject nodes for each aspect."
+    },
+    {
+        "id": "fram-basic",
+        "type": "fram",
+        "z": "simple-fram-example",
+        "name": "Basic FRAM Function",
+        "functionName": "Process_Control",
+        "interpretationProfile": "general",
+        "enableAdvancedAnalysis": true,
+        "enableResonanceDetection": false,
+        "resonanceThreshold": 0.7,
+        "x": 400,
+        "y": 200,
+        "wires": [["debug-output"]]
+    },
+    {
+        "id": "inject-input",
+        "type": "inject",
+        "z": "simple-fram-example",
+        "name": "Input Data",
+        "props": [
+            {
+                "p": "payload",
+                "v": "{\"temperature\": 85.2, \"pressure\": 3.5, \"flow_rate\": 245.8}",
+                "vt": "json"
+            },
+            {
+                "p": "framAspect",
+                "v": "input",
+                "vt": "str"
+            },
+            {
+                "p": "topic",
+                "v": "sensor_data",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 150,
+        "y": 100,
+        "wires": [["fram-basic"]]
+    },
+    {
+        "id": "inject-preconditions",
+        "type": "inject",
+        "z": "simple-fram-example",
+        "name": "Preconditions",
+        "props": [
+            {
+                "p": "payload",
+                "v": "{\"system_status\": \"operational\", \"calibration_valid\": true, \"maintenance_mode\": false}",
+                "vt": "json"
+            },
+            {
+                "p": "framAspect",
+                "v": "preconditions",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 150,
+        "y": 140,
+        "wires": [["fram-basic"]]
+    },
+    {
+        "id": "inject-resources",
+        "type": "inject",
+        "z": "simple-fram-example",
+        "name": "Resources",
+        "props": [
+            {
+                "p": "payload",
+                "v": "{\"cpu_usage\": 35, \"memory_usage\": 45, \"network_bandwidth\": 930}",
+                "vt": "json"
+            },
+            {
+                "p": "framAspect",
+                "v": "resources",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 150,
+        "y": 180,
+        "wires": [["fram-basic"]]
+    },
+    {
+        "id": "inject-time",
+        "type": "inject",
+        "z": "simple-fram-example",
+        "name": "Time Constraints",
+        "props": [
+            {
+                "p": "payload",
+                "v": "{\"cycle_time\": \"100ms\", \"deadline_pressure\": \"normal\", \"timing_criticality\": \"moderate\"}",
+                "vt": "json"
+            },
+            {
+                "p": "framAspect",
+                "v": "time",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 150,
+        "y": 220,
+        "wires": [["fram-basic"]]
+    },
+    {
+        "id": "inject-control",
+        "type": "inject",
+        "z": "simple-fram-example",
+        "name": "Control",
+        "props": [
+            {
+                "p": "payload",
+                "v": "{\"automation_level\": \"high\", \"manual_override\": \"available\", \"safety_interlocks\": \"enabled\"}",
+                "vt": "json"
+            },
+            {
+                "p": "framAspect",
+                "v": "control",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 150,
+        "y": 260,
+        "wires": [["fram-basic"]]
+    },
+    {
+        "id": "inject-output",
+        "type": "inject",
+        "z": "simple-fram-example",
+        "name": "Output",
+        "props": [
+            {
+                "p": "payload",
+                "v": "{\"product_quality\": \"excellent\", \"throughput\": 98.5, \"efficiency\": 96.2}",
+                "vt": "json"
+            },
+            {
+                "p": "framAspect",
+                "v": "output",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 150,
+        "y": 300,
+        "wires": [["fram-basic"]]
+    },
+    {
+        "id": "debug-output",
+        "type": "debug",
+        "z": "simple-fram-example",
+        "name": "FRAM Analysis",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 600,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "comment-example",
+        "type": "comment",
+        "z": "simple-fram-example",
+        "name": "FRAM Node Example",
+        "info": "This example demonstrates basic usage of the FRAM node:\n\n1. Click the inject nodes to send data for each FRAM aspect\n2. The FRAM node collects and analyzes the data\n3. View the complete analysis in the debug panel\n\n**FRAM Aspects:**\n- Input: Data entering the function\n- Preconditions: Required conditions\n- Resources: Available resources\n- Time: Timing constraints\n- Control: Control mechanisms\n- Output: Function results\n\n**Advanced Analysis** is enabled to show risk assessment and recommendations.",
+        "x": 400,
+        "y": 100,
+        "wires": []
+    }
+]

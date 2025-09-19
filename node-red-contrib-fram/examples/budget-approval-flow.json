@@ -1,0 +1,350 @@
+[
+    {
+        "id": "budget-organizational-flow",
+        "type": "tab",
+        "label": "Budget Approval - Organizational Profile",
+        "disabled": false,
+        "info": "Example of budget approval process using FRAM organizational profile for policy compliance analysis. Demonstrates hierarchy analysis, responsibilities and regulatory compliance."
+    },
+    {
+        "id": "fram-budget",
+        "type": "fram",
+        "z": "budget-organizational-flow",
+        "name": "Budget Approval Process",
+        "functionName": "Budget_Approval_Process",
+        "interpretationProfile": "organizational",
+        "variabilityMode": "medium",
+        "timeConstraint": "5days",
+        "resourceThreshold": 70,
+        "enableResonance": true,
+        "enableMetadata": true,
+        "advancedAnalysis": true,
+        "standardizedReporting": true,
+        "hierarchicalGroup": "Financial_Governance",
+        "ontologyMapping": {
+            "input": "budget_request_documentation",
+            "resources": "organizational_approval_capacity",
+            "control": "policy_compliance_framework"
+        },
+        "x": 500,
+        "y": 280,
+        "wires": [["budget-analysis", "compliance-monitor", "escalation-monitor"]]
+    },
+    {
+        "id": "budget-request",
+        "type": "inject",
+        "z": "budget-organizational-flow",
+        "name": "Budget Request",
+        "props": [
+            {
+                "p": "payload",
+                "v": "{\"request_amount\":250000,\"department\":\"IT_Infrastructure\",\"project_type\":\"capital_expenditure\",\"business_justification\":\"system_modernization\",\"priority_level\":\"high\",\"impact_scope\":\"enterprise_wide\"}",
+                "vt": "json"
+            },
+            {
+                "p": "topic",
+                "v": "input_budget_request",
+                "vt": "str"
+            },
+            {
+                "p": "framAspect",
+                "v": "input",
+                "vt": "str"
+            },
+            {
+                "p": "metadata",
+                "v": "{\"submission_date\":\"2024-01-15\",\"requesting_manager\":\"John_Smith\",\"cost_center\":\"CC_IT_001\",\"budget_category\":\"CAPEX\",\"regulatory_compliance\":\"SOX_required\",\"hierarchicalGroup\":\"Financial_Governance\",\"approval_workflow\":\"enterprise_level\"}",
+                "vt": "json"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 170,
+        "y": 180,
+        "wires": [["fram-budget"]]
+    },
+    {
+        "id": "organizational-conditions",
+        "type": "inject",
+        "z": "budget-organizational-flow",
+        "name": "Organizational Conditions",
+        "props": [
+            {
+                "p": "payload",
+                "v": "{\"fiscal_year_status\":\"Q1\",\"budget_availability\":\"sufficient\",\"approval_authority\":\"delegated\",\"audit_season\":false,\"regulatory_compliance\":\"current\",\"policy_updates\":\"none_pending\"}",
+                "vt": "json"
+            },
+            {
+                "p": "topic",
+                "v": "precondition_organizational_readiness",
+                "vt": "str"
+            },
+            {
+                "p": "framAspect",
+                "v": "preconditions",
+                "vt": "str"
+            },
+            {
+                "p": "metadata",
+                "v": "{\"governance_structure\":\"matrix_organization\",\"delegation_matrix\":\"current\",\"policy_framework\":\"ISO_9001_compliant\",\"regulatory_status\":\"compliant\",\"organizational_maturity\":\"high\",\"change_management\":\"active\"}",
+                "vt": "json"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.5,
+        "topic": "",
+        "x": 170,
+        "y": 220,
+        "wires": [["fram-budget"]]
+    },
+    {
+        "id": "approval-resources",
+        "type": "inject",
+        "z": "budget-organizational-flow",
+        "name": "Approval Resources",
+        "props": [
+            {
+                "p": "payload",
+                "v": "{\"approver_availability\":85,\"committee_schedule\":\"available\",\"financial_analyst_capacity\":90,\"legal_review_capacity\":75,\"stakeholder_engagement\":\"active\",\"decision_maker_authority\":\"confirmed\"}",
+                "vt": "json"
+            },
+            {
+                "p": "topic",
+                "v": "resource_approval_capacity",
+                "vt": "str"
+            },
+            {
+                "p": "framAspect",
+                "v": "resources",
+                "vt": "str"
+            },
+            {
+                "p": "metadata",
+                "v": "{\"organizational_hierarchy\":\"executive_level\",\"decision_authority\":\"board_delegated\",\"expertise_available\":\"financial_legal_technical\",\"workload_distribution\":\"balanced\",\"escalation_path\":\"defined\"}",
+                "vt": "json"
+            }
+        ],
+        "repeat": "6",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 1,
+        "topic": "",
+        "x": 170,
+        "y": 260,
+        "wires": [["fram-budget"]]
+    },
+    {
+        "id": "approval-timeline",
+        "type": "inject",
+        "z": "budget-organizational-flow",
+        "name": "Approval Timeline",
+        "props": [
+            {
+                "p": "payload",
+                "v": "{\"standard_timeline\":\"5_business_days\",\"current_backlog\":\"moderate\",\"deadline_pressure\":\"normal\",\"seasonal_factors\":\"budget_season\",\"priority_adjustments\":\"possible\"}",
+                "vt": "json"
+            },
+            {
+                "p": "topic",
+                "v": "timing_approval_window",
+                "vt": "str"
+            },
+            {
+                "p": "framAspect",
+                "v": "time",
+                "vt": "str"
+            },
+            {
+                "p": "metadata",
+                "v": "{\"process_maturity\":\"optimized\",\"timeline_predictability\":\"high\",\"seasonal_variation\":\"budget_cycle_dependent\",\"escalation_triggers\":\"defined\",\"deadline_management\":\"proactive\"}",
+                "vt": "json"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 1.5,
+        "topic": "",
+        "x": 170,
+        "y": 300,
+        "wires": [["fram-budget"]]
+    },
+    {
+        "id": "governance-control",
+        "type": "inject",
+        "z": "budget-organizational-flow",
+        "name": "Governance Control",
+        "props": [
+            {
+                "p": "payload",
+                "v": "{\"policy_compliance\":95,\"segregation_duties\":\"enforced\",\"approval_matrix\":\"current\",\"risk_assessment\":\"completed\",\"stakeholder_sign_off\":\"pending\",\"audit_trail\":\"complete\"}",
+                "vt": "json"
+            },
+            {
+                "p": "topic",
+                "v": "control_governance_framework",
+                "vt": "str"
+            },
+            {
+                "p": "framAspect",
+                "v": "control",
+                "vt": "str"
+            },
+            {
+                "p": "metadata",
+                "v": "{\"governance_framework\":\"COSO_framework\",\"compliance_monitoring\":\"continuous\",\"policy_enforcement\":\"automated\",\"exception_handling\":\"documented\",\"accountability_structure\":\"clear\"}",
+                "vt": "json"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 2,
+        "topic": "",
+        "x": 170,
+        "y": 340,
+        "wires": [["fram-budget"]]
+    },
+    {
+        "id": "budget-analysis",
+        "type": "debug",
+        "z": "budget-organizational-flow",
+        "name": "FRAM Analysis - Budget",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 790,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "compliance-monitor",
+        "type": "function",
+        "z": "budget-organizational-flow",
+        "name": "Compliance Monitor",
+        "func": "// Specialized monitor for organizational compliance\nvar payload = msg.payload;\n\n// Compliance and policy analysis\nif (payload && payload.performance) {\n    var complianceIssues = [];\n    var governanceRisks = [];\n    \n    // Check policy compliance\n    if (payload.aspects && payload.aspects.control) {\n        var governance = payload.aspects.control;\n        if (governance.policy_compliance < 90) {\n            complianceIssues.push(\"Policy compliance below threshold: \" + governance.policy_compliance + \"%\");\n        }\n        if (governance.segregation_duties !== \"enforced\") {\n            governanceRisks.push(\"Segregation of duties not properly enforced\");\n        }\n        if (governance.audit_trail !== \"complete\") {\n            governanceRisks.push(\"Incomplete audit trail detected\");\n        }\n    }\n    \n    // Check organizational capacity\n    if (payload.aspects && payload.aspects.resources) {\n        var resources = payload.aspects.resources;\n        if (resources.approver_availability < 70) {\n            governanceRisks.push(\"Low approver availability: \" + resources.approver_availability + \"%\");\n        }\n        if (resources.legal_review_capacity < 60) {\n            governanceRisks.push(\"Insufficient legal review capacity\");\n        }\n    }\n    \n    // Organizational resonance analysis\n    if (payload.resonance && payload.resonance.detected) {\n        var resonanceAlert = {\n            payload: {\n                alert_type: \"organizational_resonance\",\n                severity: payload.resonance.intensity > 0.8 ? \"critical\" : \"warning\",\n                governance_impact: {\n                    compliance_issues: complianceIssues,\n                    governance_risks: governanceRisks,\n                    resonance_intensity: payload.resonance.intensity\n                },\n                recommendations: [\n                    \"Review approval workflow for bottlenecks\",\n                    \"Ensure policy compliance monitoring\",\n                    \"Validate delegation of authority\",\n                    \"Check resource allocation for approval process\"\n                ],\n                regulatory_implications: {\n                    sox_compliance: \"review_required\",\n                    audit_implications: \"document_deviation\",\n                    policy_review: \"recommended\"\n                },\n                timestamp: new Date().toISOString()\n            },\n            topic: \"organizational_governance_alert\"\n        };\n        \n        node.send([null, resonanceAlert]);\n    }\n    \n    // Organizational compliance report\n    var complianceReport = {\n        payload: {\n            organizational_performance: {\n                policy_compliance: payload.aspects?.control?.policy_compliance || \"unknown\",\n                governance_effectiveness: payload.aspects?.control?.segregation_duties || \"unknown\",\n                resource_adequacy: payload.aspects?.resources?.approver_availability || \"unknown\",\n                process_maturity: payload.aspects?.time?.process_maturity || \"unknown\"\n            },\n            budget_request_analysis: {\n                request_amount: payload.aspects?.input?.request_amount || 0,\n                department: payload.aspects?.input?.department || \"unknown\",\n                priority_level: payload.aspects?.input?.priority_level || \"unknown\",\n                business_justification: payload.aspects?.input?.business_justification || \"unknown\"\n            },\n            governance_metrics: {\n                compliance_score: payload.aspects?.control?.policy_compliance || 0,\n                risk_level: payload.advancedAnalysis?.riskAssessment?.overallRisk || \"unknown\",\n                approval_efficiency: payload.performance?.precision === \"precise\" ? \"high\" : \"needs_improvement\"\n            },\n            regulatory_status: {\n                sox_compliance: payload.aspects?.input?.regulatory_compliance === \"SOX_required\" ? \"required\" : \"not_applicable\",\n                audit_readiness: complianceIssues.length === 0 ? \"ready\" : \"issues_identified\",\n                policy_updates: payload.aspects?.preconditions?.policy_updates || \"none\"\n            },\n            timestamp: new Date().toISOString()\n        },\n        topic: \"organizational_compliance_report\"\n    };\n    \n    node.send([complianceReport, null]);\n}\n\n// Log identified issues\nif (complianceIssues.length > 0 || governanceRisks.length > 0) {\n    node.warn(\"Governance issues detected: \" + JSON.stringify({\n        compliance: complianceIssues,\n        risks: governanceRisks\n    }));\n}\n\nreturn msg;",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 790,
+        "y": 300,
+        "wires": [["compliance-log"], ["governance-alerts"]]
+    },
+    {
+        "id": "compliance-log",
+        "type": "debug",
+        "z": "budget-organizational-flow",
+        "name": "Log de Conformidade",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1020,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "governance-alerts",
+        "type": "debug",
+        "z": "budget-organizational-flow",
+        "name": "Alertas de Governança",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1020,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "workflow-simulator",
+        "type": "inject",
+        "z": "budget-organizational-flow",
+        "name": "Simular Fluxo Completo",
+        "props": [
+            {
+                "p": "payload",
+                "v": "complete_workflow",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 170,
+        "y": 400,
+        "wires": [["approval-workflow"]]
+    },
+    {
+        "id": "approval-workflow",
+        "type": "function",
+        "z": "budget-organizational-flow",
+        "name": "Fluxo de Aprovação",
+        "func": "// Simulates complete budget approval workflow\nvar workflowStage = context.get('workflowStage') || 0;\nworkflowStage++;\ncontext.set('workflowStage', workflowStage);\n\nvar delay = 3000; // 3 seconds between stages\n\nswitch(workflowStage) {\n    case 1:\n        // Phase 1: Initial submission\n        setTimeout(() => {\n            node.send({\n                payload: {\n                    request_amount: 500000, // High value for testing\n                    department: \"Strategic_Initiatives\",\n                    project_type: \"digital_transformation\",\n                    business_justification: \"competitive_advantage\",\n                    priority_level: \"critical\",\n                    impact_scope: \"organization_wide\"\n                },\n                topic: \"input_large_budget_request\",\n                framAspect: \"input\",\n                metadata: {\n                    submission_date: new Date().toISOString(),\n                    requesting_manager: \"CEO_Office\",\n                    cost_center: \"CC_STRATEGIC_001\",\n                    budget_category: \"CAPEX_Strategic\",\n                    regulatory_compliance: \"SOX_required\",\n                    approval_workflow: \"board_level\",\n                    risk_category: \"high\"\n                }\n            });\n        }, delay);\n        break;\n        \n    case 2:\n        // Phase 2: Organizational conditions under pressure\n        setTimeout(() => {\n            node.send({\n                payload: {\n                    fiscal_year_status: \"Q4\", // End of fiscal year\n                    budget_availability: \"limited\",\n                    approval_authority: \"board_required\",\n                    audit_season: true, // Audit period\n                    regulatory_compliance: \"under_review\",\n                    policy_updates: \"pending_approval\"\n                },\n                topic: \"precondition_challenging_conditions\",\n                framAspect: \"preconditions\",\n                metadata: {\n                    governance_structure: \"hierarchical\",\n                    delegation_matrix: \"restricted\",\n                    policy_framework: \"under_revision\",\n                    regulatory_status: \"transitional\",\n                    organizational_maturity: \"developing\"\n                }\n            });\n        }, delay * 1.5);\n        break;\n        \n    case 3:\n        // Phase 3: Limited resources\n        setTimeout(() => {\n            node.send({\n                payload: {\n                    approver_availability: 40, // Low availability\n                    committee_schedule: \"conflicted\",\n                    financial_analyst_capacity: 30,\n                    legal_review_capacity: 25,\n                    stakeholder_engagement: \"limited\",\n                    decision_maker_authority: \"delegated_partially\"\n                },\n                topic: \"resource_constrained_capacity\",\n                framAspect: \"resources\",\n                metadata: {\n                    organizational_hierarchy: \"complex\",\n                    decision_authority: \"distributed\",\n                    expertise_available: \"specialized_required\",\n                    workload_distribution: \"uneven\",\n                    escalation_path: \"congested\"\n                }\n            });\n        }, delay * 2);\n        break;\n        \n    case 4:\n        // Phase 4: Time pressure\n        setTimeout(() => {\n            node.send({\n                payload: {\n                    standard_timeline: \"10_business_days\",\n                    current_backlog: \"high\",\n                    deadline_pressure: \"critical\",\n                    seasonal_factors: \"year_end_rush\",\n                    priority_adjustments: \"emergency_procedures\"\n                },\n                topic: \"timing_accelerated_approval\",\n                framAspect: \"time\",\n                metadata: {\n                    process_maturity: \"stressed\",\n                    timeline_predictability: \"low\",\n                    seasonal_variation: \"peak_period\",\n                    escalation_triggers: \"activated\",\n                    deadline_management: \"reactive\"\n                }\n            });\n        }, delay * 2.5);\n        break;\n        \n    case 5:\n        // Phase 5: Intensified governance control\n        setTimeout(() => {\n            node.send({\n                payload: {\n                    policy_compliance: 75, // Reduced compliance under pressure\n                    segregation_duties: \"partially_enforced\",\n                    approval_matrix: \"exception_mode\",\n                    risk_assessment: \"expedited\",\n                    stakeholder_sign_off: \"electronic_urgent\",\n                    audit_trail: \"accelerated_documentation\"\n                },\n                topic: \"control_emergency_governance\",\n                framAspect: \"control\",\n                metadata: {\n                    governance_framework: \"emergency_protocols\",\n                    compliance_monitoring: \"enhanced\",\n                    policy_enforcement: \"exception_handling\",\n                    exception_handling: \"board_approved\",\n                    accountability_structure: \"escalated\"\n                }\n            });\n        }, delay * 3);\n        \n        // Reset for next simulation\n        setTimeout(() => {\n            context.set('workflowStage', 0);\n            node.log(\"Complete approval workflow - data sent for FRAM analysis\");\n        }, delay * 3.5);\n        break;\n}\n\nnode.log(`Executing stage ${workflowStage} of budget approval workflow`);\n\nreturn null;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 400,
+        "wires": [["fram-budget"]]
+    },
+    {
+        "id": "policy-compliance",
+        "type": "inject",
+        "z": "budget-organizational-flow",
+        "name": "Teste de Conformidade",
+        "props": [
+            {
+                "p": "payload",
+                "v": "compliance_test",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 170,
+        "y": 440,
+        "wires": [["compliance-scenarios"]]
+    },
+    {
+        "id": "compliance-scenarios",
+        "type": "function",
+        "z": "budget-organizational-flow",
+        "name": "Cenários de Conformidade",
+        "func": "// Simulates different organizational compliance scenarios\nvar scenarios = [\n    {\n        name: \"High Compliance\",\n        governance: {\n            policy_compliance: 98,\n            segregation_duties: \"strictly_enforced\",\n            approval_matrix: \"current_validated\",\n            risk_assessment: \"comprehensive\",\n            stakeholder_sign_off: \"documented\",\n            audit_trail: \"complete_detailed\"\n        },\n        metadata: {\n            governance_framework: \"best_practice\",\n            compliance_monitoring: \"real_time\",\n            policy_enforcement: \"automated_strict\"\n        }\n    },\n    {\n        name: \"Moderate Compliance\",\n        governance: {\n            policy_compliance: 82,\n            segregation_duties: \"mostly_enforced\",\n            approval_matrix: \"minor_exceptions\",\n            risk_assessment: \"standard\",\n            stakeholder_sign_off: \"verbal_confirmed\",\n            audit_trail: \"adequate\"\n        },\n        metadata: {\n            governance_framework: \"standard_practice\",\n            compliance_monitoring: \"periodic\",\n            policy_enforcement: \"manual_oversight\"\n        }\n    },\n    {\n        name: \"Low Compliance\",\n        governance: {\n            policy_compliance: 65,\n            segregation_duties: \"inconsistently_enforced\",\n            approval_matrix: \"outdated\",\n            risk_assessment: \"minimal\",\n            stakeholder_sign_off: \"informal\",\n            audit_trail: \"incomplete\"\n        },\n        metadata: {\n            governance_framework: \"developing\",\n            compliance_monitoring: \"ad_hoc\",\n            policy_enforcement: \"reactive\"\n        }\n    }\n];\n\n// Select scenario based on timestamp\nvar scenarioIndex = Math.floor(Date.now() / 10000) % scenarios.length;\nvar selectedScenario = scenarios[scenarioIndex];\n\n// Send scenario data\nvar complianceMessage = {\n    payload: selectedScenario.governance,\n    topic: \"control_compliance_scenario_\" + selectedScenario.name.toLowerCase().replace(' ', '_'),\n    framAspect: \"control\",\n    metadata: {\n        ...selectedScenario.metadata,\n        scenario_name: selectedScenario.name,\n        test_timestamp: new Date().toISOString(),\n        hierarchicalGroup: \"Financial_Governance\"\n    }\n};\n\n// Add complementary organizational data\nvar organizationalContext = {\n    payload: {\n        fiscal_year_status: \"Q2\",\n        budget_availability: selectedScenario.name === \"High Compliance\" ? \"abundant\" : \n                             selectedScenario.name === \"Moderate Compliance\" ? \"adequate\" : \"constrained\",\n        approval_authority: selectedScenario.name === \"High Compliance\" ? \"clearly_delegated\" :\n                           selectedScenario.name === \"Moderate Compliance\" ? \"mostly_clear\" : \"ambiguous\",\n        audit_season: false,\n        regulatory_compliance: selectedScenario.name === \"High Compliance\" ? \"exemplary\" :\n                               selectedScenario.name === \"Moderate Compliance\" ? \"compliant\" : \"at_risk\"\n    },\n    topic: \"precondition_organizational_context\",\n    framAspect: \"preconditions\",\n    metadata: {\n        scenario_context: selectedScenario.name,\n        governance_maturity: selectedScenario.name === \"High Compliance\" ? \"optimized\" :\n                            selectedScenario.name === \"Moderate Compliance\" ? \"managed\" : \"initial\"\n    }\n};\n\nnode.send([complianceMessage, organizationalContext]);\n\nnode.log(`Testing scenario: ${selectedScenario.name} - Compliance: ${selectedScenario.governance.policy_compliance}%`);\n\nreturn null;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 440,
+        "wires": [["fram-budget"]]
+    },\n    {\n        \"id\": \"escalation-monitor\",\n        \"type\": \"function\",\n        \"z\": \"budget-organizational-flow\",\n        \"name\": \"Escalation Monitor\",\n        \"func\": \"// Monitor para escalações organizacionais\\nvar payload = msg.payload;\\n\\n// Verificar se há necessidade de escalação\\nif (payload && payload.advancedAnalysis) {\\n    var analysis = payload.advancedAnalysis;\\n    var needsEscalation = false;\\n    var escalationReasons = [];\\n    \\n    // Critérios de escalação\\n    if (analysis.riskAssessment && analysis.riskAssessment.overallRisk === \\\"high\\\") {\\n        needsEscalation = true;\\n        escalationReasons.push(\\\"High risk assessment\\\");\\n    }\\n    \\n    if (payload.resonance && payload.resonance.intensity > 0.7) {\\n        needsEscalation = true;\\n        escalationReasons.push(\\\"Functional resonance detected\\\");\\n    }\\n    \\n    // Verificar compliance\\n    if (payload.aspects && payload.aspects.control) {\\n        var compliance = payload.aspects.control.policy_compliance;\\n        if (compliance < 80) {\\n            needsEscalation = true;\\n            escalationReasons.push(\\\"Policy compliance below threshold: \\\" + compliance + \\\"%\\\");\\n        }\\n    }\\n    \\n    // Verificar valor da solicitação\\n    if (payload.aspects && payload.aspects.input) {\\n        var amount = payload.aspects.input.request_amount;\\n        if (amount > 300000) {\\n            needsEscalation = true;\\n            escalationReasons.push(\\\"High value request: $\\\" + amount.toLocaleString());\\n        }\\n    }\\n    \\n    if (needsEscalation) {\\n        var escalationAlert = {\\n            payload: {\\n                escalation_type: \\\"organizational_governance\\\",\\n                severity: \\\"requires_attention\\\",\\n                reasons: escalationReasons,\\n                recommended_actions: [\\n                    \\\"Review with senior management\\\",\\n                    \\\"Validate approval authority\\\",\\n                    \\\"Consider additional controls\\\",\\n                    \\\"Document exception rationale\\\"\\n                ],\\n                stakeholders: [\\n                    \\\"CFO\\\",\\n                    \\\"Audit_Committee\\\",\\n                    \\\"Risk_Management\\\",\\n                    \\\"Legal_Counsel\\\"\\n                ],\\n                timeline: \\\"immediate_review_required\\\",\\n                timestamp: new Date().toISOString()\\n            },\\n            topic: \\\"escalation_alert\\\"\\n        };\\n        \\n        node.send([null, escalationAlert]);\\n        node.warn(\\\"Escalação necessária: \\\" + escalationReasons.join(\\\", \\\"));\\n    }\\n}\\n\\nreturn msg;\",\n        \"outputs\": 2,\n        \"noerr\": 0,\n        \"initialize\": \"\",\n        \"finalize\": \"\",\n        \"libs\": [],\n        \"x\": 780,\n        \"y\": 360,\n        \"wires\": [[\\\"escalation-log\\\"], [\\\"escalation-alerts\\\"]]\n    },\n    {\n        \"id\": \"escalation-log\",\n        \"type\": \"debug\",\n        \"z\": \"budget-organizational-flow\",\n        \"name\": \"Escalation Log\",\n        \"active\": true,\n        \"tosidebar\": true,\n        \"console\": true,\n        \"tostatus\": false,\n        \"complete\": \"payload\",\n        \"targetType\": \"msg\",\n        \"statusVal\": \"\",\n        \"statusType\": \"auto\",\n        \"x\": 1000,\n        \"y\": 340,\n        \"wires\": []\n    },\n    {\n        \"id\": \"escalation-alerts\",\n        \"type\": \"debug\",\n        \"z\": \"budget-organizational-flow\",\n        \"name\": \"Escalation Alerts\",\n        \"active\": true,\n        \"tosidebar\": true,\n        \"console\": true,\n        \"tostatus\": false,\n        \"complete\": \"true\",\n        \"targetType\": \"full\",\n        \"statusVal\": \"\",\n        \"statusType\": \"auto\",\n        \"x\": 1010,\n        \"y\": 380,\n        \"wires\": []\n    },\n    {\n        \"id\": \"comment-budget\",\n        \"type\": \"comment\",\n        \"z\": \"budget-organizational-flow\",\n        \"name\": \"Budget Approval - Organizational Profile\",\n        \"info\": \"This flow demonstrates the use of the advanced FRAM node for organizational analysis:\\n\\n**Organizational Profile Characteristics:**\\n- Emphasis on policies and compliance\\n- Analysis of governance structures\\n- Monitoring of authority and responsibilities\\n- Detection of resonance in organizational processes\\n\\n**FRAM Aspects Implemented:**\\n- Input: Budget requests and documentation\\n- Preconditions: Organizational and regulatory conditions\\n- Resources: Approval capacity and expertise\\n- Time: Schedules and time pressures\\n- Control: Governance and compliance frameworks\\n\\n**Demonstrated Features:**\\n- Organizational metadata (certifications, authorities)\\n- Regulatory compliance monitor\\n- Approval workflow simulation\\n- Different compliance level scenarios\\n- Organizational escalation system\\n- Resonance analysis in governance processes\",\n        \"x\": 230,\n        \"y\": 80,\n        \"wires\": []\n    }\n]

@@ -1,0 +1,325 @@
+[
+    {
+        "id": "industrial-control-flow",
+        "type": "tab",
+        "label": "Sistema Industrial - Controle de Processo",
+        "disabled": false,
+        "info": "Exemplo de sistema industrial usando perfil tecnológico do FRAM para controle de processo automatizado. Demonstra análise de precisão, timing e confiabilidade em ambiente industrial."
+    },
+    {
+        "id": "fram-industrial",
+        "type": "fram",
+        "z": "industrial-control-flow",
+        "name": "Sistema de Controle Industrial",
+        "functionName": "Industrial_Process_Control",
+        "interpretationProfile": "technological",
+        "variabilityMode": "low",
+        "timeConstraint": "100ms",
+        "resourceThreshold": 85,
+        "enableResonance": true,
+        "enableMetadata": true,
+        "advancedAnalysis": true,
+        "standardizedReporting": true,
+        "hierarchicalGroup": "Control_System",
+        "ontologyMapping": {
+            "input": "sensor_data_stream",
+            "resources": "processing_unit_capacity", 
+            "control": "automated_control_system"
+        },
+        "x": 500,
+        "y": 280,
+        "wires": [["industrial-output", "safety-monitor"]]
+    },
+    {
+        "id": "sensor-input",
+        "type": "inject",
+        "z": "industrial-control-flow",
+        "name": "Sensores de Processo",
+        "props": [
+            {
+                "p": "payload",
+                "v": "{\"temperature\":85.2,\"pressure\":3.5,\"flow_rate\":245.8,\"ph_level\":7.2,\"turbidity\":0.15}",
+                "vt": "json"
+            },
+            {
+                "p": "topic",
+                "v": "input_sensor",
+                "vt": "str"
+            },
+            {
+                "p": "framAspect",
+                "v": "input",
+                "vt": "str"
+            },
+            {
+                "p": "metadata",
+                "v": "{\"sensorType\":\"industrial_grade\",\"accuracy\":\"±0.1%\",\"calibrationDate\":\"2024-01-15\",\"redundancyLevel\":\"triple\",\"hierarchicalGroup\":\"Control_System\",\"measurementRange\":\"0-100°C\"}",
+                "vt": "json"
+            }
+        ],
+        "repeat": "2",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 170,
+        "y": 180,
+        "wires": [["fram-industrial"]]
+    },
+    {
+        "id": "system-status",
+        "type": "inject",
+        "z": "industrial-control-flow",
+        "name": "Status do Sistema",
+        "props": [
+            {
+                "p": "payload",
+                "v": "{\"system_status\":\"operational\",\"safety_interlocks\":\"enabled\",\"calibration_valid\":true,\"maintenance_mode\":false,\"emergency_stop\":false}",
+                "vt": "json"
+            },
+            {
+                "p": "topic",
+                "v": "precondition_system_ready",
+                "vt": "str"
+            },
+            {
+                "p": "framAspect",
+                "v": "preconditions",
+                "vt": "str"
+            },
+            {
+                "p": "metadata",
+                "v": "{\"systemCertification\":\"ISO_9001\",\"safetyLevel\":\"SIL_3\",\"lastMaintenance\":\"2024-01-10\",\"operatorQualified\":true,\"environmentalConditions\":\"normal\"}",
+                "vt": "json"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.5,
+        "topic": "",
+        "x": 170,
+        "y": 220,
+        "wires": [["fram-industrial"]]
+    },
+    {
+        "id": "processing-resources",
+        "type": "inject",
+        "z": "industrial-control-flow",
+        "name": "Recursos de Processamento",
+        "props": [
+            {
+                "p": "payload",
+                "v": "{\"cpu_usage\":28,\"memory_usage\":35,\"network_bandwidth\":920,\"storage_available\":85,\"real_time_capacity\":95}",
+                "vt": "json"
+            },
+            {
+                "p": "topic",
+                "v": "resource_processing_power",
+                "vt": "str"
+            },
+            {
+                "p": "framAspect",
+                "v": "resources",
+                "vt": "str"
+            },
+            {
+                "p": "metadata",
+                "v": "{\"systemLoad\":\"optimal\",\"redundancyLevel\":\"triple\",\"performanceClass\":\"real_time\",\"hardwareStatus\":\"excellent\",\"coolingStatus\":\"normal\"}",
+                "vt": "json"
+            }
+        ],
+        "repeat": "3",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 1,
+        "topic": "",
+        "x": 170,
+        "y": 260,
+        "wires": [["fram-industrial"]]
+    },
+    {
+        "id": "timing-control",
+        "type": "inject",
+        "z": "industrial-control-flow",
+        "name": "Controle de Timing",
+        "props": [
+            {
+                "p": "payload",
+                "v": "{\"cycle_time\":\"100ms\",\"max_latency\":\"25ms\",\"jitter\":\"±2ms\",\"real_time_priority\":true,\"sync_status\":\"locked\"}",
+                "vt": "json"
+            },
+            {
+                "p": "topic",
+                "v": "timing_control",
+                "vt": "str"
+            },
+            {
+                "p": "framAspect",
+                "v": "time",
+                "vt": "str"
+            },
+            {
+                "p": "metadata",
+                "v": "{\"timingCriticality\":\"high\",\"jitterTolerance\":\"±5ms\",\"synchronizationSource\":\"master_clock\",\"clockAccuracy\":\"±10ppm\",\"timingStandard\":\"IEEE_1588\"}",
+                "vt": "json"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 1.5,
+        "topic": "",
+        "x": 170,
+        "y": 300,
+        "wires": [["fram-industrial"]]
+    },
+    {
+        "id": "automation-control",
+        "type": "inject",
+        "z": "industrial-control-flow",
+        "name": "Sistema de Controle",
+        "props": [
+            {
+                "p": "payload",
+                "v": "{\"control_mode\":\"automatic\",\"operator_override\":false,\"safety_level\":\"normal\",\"pid_tuning\":\"optimal\",\"setpoint_tracking\":\"active\"}",
+                "vt": "json"
+            },
+            {
+                "p": "topic",
+                "v": "control_parameters",
+                "vt": "str"
+            },
+            {
+                "p": "framAspect",
+                "v": "control",
+                "vt": "str"
+            },
+            {
+                "p": "metadata",
+                "v": "{\"controlAuthority\":\"automated_system\",\"humanSupervision\":\"monitoring\",\"emergencyProtocols\":\"active\",\"controlLoopStatus\":\"stable\",\"adaptiveControl\":\"enabled\"}",
+                "vt": "json"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 2,
+        "topic": "",
+        "x": 170,
+        "y": 340,
+        "wires": [["fram-industrial"]]
+    },
+    {
+        "id": "industrial-output",
+        "type": "debug",
+        "z": "industrial-control-flow",
+        "name": "Análise FRAM Industrial",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 780,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "safety-monitor",
+        "type": "function",
+        "z": "industrial-control-flow",
+        "name": "Monitor de Segurança",
+        "func": "// Monitor de segurança para sistema industrial\nif (msg.payload && msg.payload.resonance && msg.payload.resonance.detected) {\n    node.warn(\"Ressonância funcional detectada no sistema industrial!\");\n    \n    // Gerar alerta de segurança\n    var alert = {\n        payload: {\n            alert_type: \"functional_resonance\",\n            severity: msg.payload.resonance.intensity > 0.8 ? \"critical\" : \"warning\",\n            system: msg.payload.functionName,\n            timestamp: new Date().toISOString(),\n            details: msg.payload.resonance,\n            recommendations: msg.payload.advancedAnalysis ? msg.payload.advancedAnalysis.recommendations : []\n        },\n        topic: \"safety_alert\"\n    };\n    \n    node.send([null, alert]);\n}\n\n// Verificar métricas de performance\nif (msg.payload && msg.payload.performance) {\n    var perf = msg.payload.performance;\n    if (perf.timing === \"too-early/too-late\" || perf.precision === \"approximate\") {\n        node.warn(\"Degradação de performance detectada: \" + JSON.stringify(perf));\n    }\n}\n\n// Log de análise avançada\nif (msg.payload && msg.payload.advancedAnalysis) {\n    var analysis = msg.payload.advancedAnalysis;\n    if (analysis.riskAssessment.overallRisk !== \"low\") {\n        node.log(\"Risco elevado detectado: \" + analysis.riskAssessment.overallRisk);\n    }\n}\n\nreturn msg;",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 780,
+        "y": 300,
+        "wires": [["performance-log"], ["safety-alert"]]
+    },
+    {
+        "id": "performance-log",
+        "type": "debug",
+        "z": "industrial-control-flow",
+        "name": "Log de Performance",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "payload.performance",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1000,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "safety-alert",
+        "type": "debug",
+        "z": "industrial-control-flow",
+        "name": "Alertas de Segurança",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1010,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "test-sequence",
+        "type": "inject",
+        "z": "industrial-control-flow",
+        "name": "Iniciar Sequência de Teste",
+        "props": [
+            {
+                "p": "payload",
+                "v": "start_industrial_test",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 170,
+        "y": 400,
+        "wires": [["sequence-controller"]]
+    },
+    {
+        "id": "sequence-controller",
+        "type": "function",
+        "z": "industrial-control-flow",
+        "name": "Controlador de Sequência",
+        "func": "// Sequência automatizada de teste para sistema industrial\nvar delay = 1000; // 1 segundo entre mensagens\n\n// Dados de sensores com variação temporal\nsetTimeout(() => {\n    node.send({\n        payload: {\n            temperature: 85.2 + (Math.random() - 0.5) * 2,\n            pressure: 3.5 + (Math.random() - 0.5) * 0.2,\n            flow_rate: 245.8 + (Math.random() - 0.5) * 10,\n            ph_level: 7.2 + (Math.random() - 0.5) * 0.2,\n            turbidity: 0.15 + (Math.random() - 0.5) * 0.05\n        },\n        topic: \"input_sensor\",\n        framAspect: \"input\",\n        metadata: {\n            sensorType: \"industrial_grade\",\n            accuracy: \"±0.1%\",\n            timestamp: new Date().toISOString(),\n            hierarchicalGroup: \"Control_System\"\n        }\n    });\n}, delay);\n\n// Status do sistema\nsetTimeout(() => {\n    node.send({\n        payload: {\n            system_status: \"operational\",\n            safety_interlocks: \"enabled\",\n            calibration_valid: true,\n            maintenance_mode: false\n        },\n        topic: \"precondition_system_ready\",\n        framAspect: \"preconditions\",\n        metadata: {\n            systemCertification: \"ISO_9001\",\n            safetyLevel: \"SIL_3\"\n        }\n    });\n}, delay * 2);\n\n// Recursos com carga variável\nsetTimeout(() => {\n    var load = 20 + Math.random() * 30; // 20-50% de carga\n    node.send({\n        payload: {\n            cpu_usage: load,\n            memory_usage: load + 10,\n            network_bandwidth: 1000 - (load * 2),\n            real_time_capacity: 100 - load\n        },\n        topic: \"resource_processing_power\",\n        framAspect: \"resources\",\n        metadata: {\n            systemLoad: load < 40 ? \"optimal\" : \"moderate\",\n            performanceClass: \"real_time\"\n        }\n    });\n}, delay * 3);\n\nreturn null;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 400,
+        "wires": [["fram-industrial"]]
+    },
+    {
+        "id": "comment-industrial",
+        "type": "comment",
+        "z": "industrial-control-flow",
+        "name": "Sistema Industrial - Perfil Tecnológico",
+        "info": "Este fluxo demonstra o uso do node FRAM avançado em um contexto industrial:\n\n**Características do Perfil Tecnológico:**\n- Ênfase em precisão e timing\n- Análise de recursos computacionais\n- Detecção de ressonância em sistemas automatizados\n- Monitoramento de performance em tempo real\n\n**Aspectos FRAM Implementados:**\n- Input: Dados de sensores industriais\n- Preconditions: Status e certificações do sistema\n- Resources: Capacidade de processamento\n- Time: Controle de timing crítico\n- Control: Sistema de automação\n\n**Funcionalidades Demonstradas:**\n- Metadados industriais (certificações, calibrações)\n- Agrupamento hierárquico (Control_System)\n- Mapeamento ontológico para conceitos industriais\n- Monitor de segurança com alertas\n- Análise de performance contínua",
+        "x": 200,
+        "y": 80,
+        "wires": []
+    }
+]

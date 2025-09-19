@@ -1,0 +1,272 @@
+<script type="text/javascript">
+    RED.nodes.registerType('fram', {
+        category: 'analysis',
+        color: '#3FADB5',
+        defaults: {
+            name: { value: "" },
+            functionName: { value: "FRAM_Function", required: true },
+            interpretationProfile: { value: "general", required: true },
+            enableAdvancedAnalysis: { value: false },
+            enableResonanceDetection: { value: false },
+            resonanceThreshold: { value: 0.7, validate: RED.validators.number() },
+            aspectsConfig: { value: {} },
+            metadataMapping: { value: {} },
+            hierarchicalGrouping: { value: false }
+        },
+        inputs: 1,
+        outputs: 1,
+        icon: "function.png",
+        label: function() {
+            return this.name || this.functionName || "FRAM";
+        },
+        labelStyle: function() {
+            return this.name ? "node_label_italic" : "";
+        },
+        oneditprepare: function() {
+            var node = this;
+            
+            // Initialize tabs
+            var tabs = RED.tabs.create({
+                id: "fram-tabs",
+                onchange: function(tab) {
+                    $("#fram-tabs-content").children().hide();
+                    $("#" + tab.id).show();
+                }
+            });
+            
+            tabs.addTab({
+                id: "fram-tab-basic",
+                label: "Basic Config"
+            });
+            
+            tabs.addTab({
+                id: "fram-tab-analysis",
+                label: "Analysis"
+            });
+            
+            tabs.addTab({
+                id: "fram-tab-advanced",
+                label: "Advanced"
+            });
+
+            // Profile change handler
+            $("#node-input-interpretationProfile").change(function() {
+                var profile = $(this).val();
+                updateProfileDescription(profile);
+            });
+
+            function updateProfileDescription(profile) {
+                var descriptions = {
+                    general: "General purpose FRAM analysis suitable for most applications",
+                    human: "Human factors analysis - emphasizes cognitive aspects, fatigue, and decision-making",
+                    organizational: "Organizational analysis - focuses on governance, policies, and compliance",
+                    technological: "Technological analysis - emphasizes precision, timing, and system reliability"
+                };
+                
+                $("#profile-description").text(descriptions[profile] || descriptions.general);
+            }
+
+            // Initialize profile description
+            updateProfileDescription($("#node-input-interpretationProfile").val());
+
+            // Advanced analysis toggle
+            $("#node-input-enableAdvancedAnalysis").change(function() {
+                if ($(this).is(':checked')) {
+                    $("#advanced-analysis-options").show();
+                } else {
+                    $("#advanced-analysis-options").hide();
+                }
+            });
+
+            // Resonance detection toggle
+            $("#node-input-enableResonanceDetection").change(function() {
+                if ($(this).is(':checked')) {
+                    $("#resonance-options").show();
+                } else {
+                    $("#resonance-options").hide();
+                }
+            });
+
+            // Initialize visibility
+            if ($("#node-input-enableAdvancedAnalysis").is(':checked')) {
+                $("#advanced-analysis-options").show();
+            } else {
+                $("#advanced-analysis-options").hide();
+            }
+
+            if ($("#node-input-enableResonanceDetection").is(':checked')) {
+                $("#resonance-options").show();
+            } else {
+                $("#resonance-options").hide();
+            }
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="fram">
+    <div class="form-row">
+        <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+
+    <div class="form-row">
+        <ul id="fram-tabs"></ul>
+    </div>
+
+    <div id="fram-tabs-content" style="min-height: 300px;">
+        <!-- Basic Configuration Tab -->
+        <div id="fram-tab-basic" style="display:none">
+            <div class="form-row">
+                <label for="node-input-functionName"><i class="fa fa-cogs"></i> Function Name</label>
+                <input type="text" id="node-input-functionName" placeholder="e.g., Air_Traffic_Control">
+                <div class="form-tips">Unique identifier for this FRAM function</div>
+            </div>
+
+            <div class="form-row">
+                <label for="node-input-interpretationProfile"><i class="fa fa-user"></i> Profile</label>
+                <select id="node-input-interpretationProfile">
+                    <option value="general">General</option>
+                    <option value="human">Human Factors</option>
+                    <option value="organizational">Organizational</option>
+                    <option value="technological">Technological</option>
+                </select>
+                <div class="form-tips" id="profile-description">Select the interpretation profile for FRAM analysis</div>
+            </div>
+
+            <div class="form-row">
+                <label>&nbsp;</label>
+                <input type="checkbox" id="node-input-hierarchicalGrouping" style="display: inline-block; width: auto; vertical-align: top;">
+                <label for="node-input-hierarchicalGrouping" style="width: 70%;">Enable Hierarchical Grouping</label>
+                <div class="form-tips">Group related functions hierarchically for complex system analysis</div>
+            </div>
+        </div>
+
+        <!-- Analysis Configuration Tab -->
+        <div id="fram-tab-analysis" style="display:none">
+            <div class="form-row">
+                <label>&nbsp;</label>
+                <input type="checkbox" id="node-input-enableAdvancedAnalysis" style="display: inline-block; width: auto; vertical-align: top;">
+                <label for="node-input-enableAdvancedAnalysis" style="width: 70%;">Enable Advanced Analysis</label>
+                <div class="form-tips">Provides risk assessment, recommendations, and completeness analysis</div>
+            </div>
+
+            <div id="advanced-analysis-options" style="margin-left: 20px;">
+                <div class="form-row">
+                    <div class="form-tips">
+                        <strong>Advanced Analysis includes:</strong><br>
+                        ? Risk assessment based on aspect values<br>
+                        ? Completeness scoring<br>
+                        ? Automated recommendations<br>
+                        ? Performance metrics
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <label>&nbsp;</label>
+                <input type="checkbox" id="node-input-enableResonanceDetection" style="display: inline-block; width: auto; vertical-align: top;">
+                <label for="node-input-enableResonanceDetection" style="width: 70%;">Enable Resonance Detection</label>
+                <div class="form-tips">Detects functional resonance patterns that may indicate system instability</div>
+            </div>
+
+            <div id="resonance-options" style="margin-left: 20px;">
+                <div class="form-row">
+                    <label for="node-input-resonanceThreshold"><i class="fa fa-signal"></i> Threshold</label>
+                    <input type="number" id="node-input-resonanceThreshold" step="0.1" min="0" max="1" style="width: 100px;">
+                    <div class="form-tips">Threshold for resonance detection (0.0 - 1.0). Higher values = less sensitive</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Advanced Configuration Tab -->
+        <div id="fram-tab-advanced" style="display:none">
+            <div class="form-row">
+                <label><i class="fa fa-info-circle"></i> FRAM Aspects</label>
+                <div class="form-tips">
+                    <strong>FRAM expects messages with these properties:</strong><br>
+                    ? <code>msg.framAspect</code>: "input", "preconditions", "resources", "time", "control", or "output"<br>
+                    ? <code>msg.payload</code>: Aspect data<br>
+                    ? <code>msg.metadata</code>: Optional metadata for the aspect<br>
+                    <br>
+                    <strong>Example:</strong><br>
+                    <code>{</code><br>
+                    <code>&nbsp;&nbsp;"framAspect": "input",</code><br>
+                    <code>&nbsp;&nbsp;"payload": {"temperature": 85.2},</code><br>
+                    <code>&nbsp;&nbsp;"metadata": {"sensor": "T1"}</code><br>
+                    <code>}</code>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <label><i class="fa fa-code"></i> Integration</label>
+                <div class="form-tips">
+                    <strong>Output Message Structure:</strong><br>
+                    ? <code>payload.functionName</code>: Function identifier<br>
+                    ? <code>payload.aspects</code>: All collected aspect data<br>
+                    ? <code>payload.performance</code>: Performance metrics<br>
+                    ? <code>payload.advancedAnalysis</code>: Risk assessment (if enabled)<br>
+                    ? <code>payload.resonance</code>: Resonance detection (if enabled)
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+<script type="text/html" data-help-name="fram">
+    <p>Functional Resonance Analysis Method (FRAM) node for modeling and analyzing complex systems.</p>
+    
+    <h3>Overview</h3>
+    <p>FRAM is a method used to model and analyze the functions of a system to understand how variability can lead to different outcomes, including accidents and incidents.</p>
+
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt>framAspect <span class="property-type">string</span></dt>
+        <dd>Specifies which FRAM aspect the payload represents: "input", "preconditions", "resources", "time", "control", or "output"</dd>
+        
+        <dt>payload <span class="property-type">object</span></dt>
+        <dd>The data for the specified FRAM aspect</dd>
+        
+        <dt>metadata <span class="property-type">object</span></dt>
+        <dd>Optional metadata associated with the aspect data</dd>
+    </dl>
+
+    <h3>Outputs</h3>
+    <dl class="message-properties">
+        <dt>payload.functionName <span class="property-type">string</span></dt>
+        <dd>The name of the FRAM function</dd>
+        
+        <dt>payload.interpretationProfile <span class="property-type">string</span></dt>
+        <dd>The analysis profile used (general, human, organizational, technological)</dd>
+        
+        <dt>payload.aspects <span class="property-type">object</span></dt>
+        <dd>Complete collection of all FRAM aspects with their current values</dd>
+        
+        <dt>payload.performance <span class="property-type">object</span></dt>
+        <dd>Performance metrics: timing, precision, and speed</dd>
+        
+        <dt>payload.advancedAnalysis <span class="property-type">object</span></dt>
+        <dd>Risk assessment, recommendations, and completeness (if enabled)</dd>
+        
+        <dt>payload.resonance <span class="property-type">object</span></dt>
+        <dd>Functional resonance detection results (if enabled)</dd>
+    </dl>
+
+    <h3>Configuration</h3>
+    <p><b>Function Name:</b> Unique identifier for this FRAM function.</p>
+    <p><b>Interpretation Profile:</b> Analysis approach tailored to different domains:</p>
+    <ul>
+        <li><b>General:</b> Standard FRAM analysis</li>
+        <li><b>Human:</b> Emphasizes cognitive factors, fatigue, decision-making</li>
+        <li><b>Organizational:</b> Focuses on governance, policies, compliance</li>
+        <li><b>Technological:</b> Emphasizes precision, timing, reliability</li>
+    </ul>
+    
+    <p><b>Advanced Analysis:</b> Enables risk assessment and automated recommendations.</p>
+    <p><b>Resonance Detection:</b> Monitors for functional resonance patterns that may indicate system instability.</p>
+
+    <h3>Example Flow</h3>
+    <p>Connect inject nodes to send aspect data with the <code>framAspect</code> property set to one of the six FRAM aspects. The node will collect and analyze the data, providing comprehensive output for further processing or monitoring.</p>
+
+    <h3>References</h3>
+    <p>For more information about FRAM methodology, see: <a href="https://functionalresonance.com" target="_blank">Functional Resonance</a></p>
+</script>
